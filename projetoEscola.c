@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdbool.h>
+<<<<<<< HEAD
 #include "menus.h"
 #define MAX_DATA 10
 #define MAX 255 
@@ -37,6 +38,16 @@ typedef struct disc {
   int semestre;
   char professor[MAX]; 
 } Disciplina; 
+=======
+#include "definicoes.h"
+#include "menus.h"
+#include "models.h"
+
+pessoa listAluno[TAM_ALU];
+int qtdAluno = 0;
+int menuAluno();
+int cadastrarAlu (pessoa listAluno[], int qtdAluno);
+>>>>>>> ebf97d3 (commit)
 
 void main() {
   int opcao, sair = false;
@@ -103,7 +114,11 @@ void main() {
         puts("CPF inválido") */
 }
 
+<<<<<<< HEAD
 int cadastrarAlu (Aluno listAluno[], int qtdAluno){
+=======
+int cadastrarAlu (pessoa listAluno[], int qtdAluno){
+>>>>>>> ebf97d3 (commit)
   printf ("Cadrasto de aluno\n");
 
   int matricula;
