@@ -1,53 +1,14 @@
 #include <stdio.h>
 #include <stdbool.h>
-<<<<<<< HEAD
-#include "menus.h"
-#define MAX_DATA 10
-#define MAX 255 
-#define TAM_ALU 255
-#define MAX_CPF 13
-
-#define MATRICULA_INVALIDA -1
-#define SEXO_INVALIDO -2
-#define CPF_INVALIDO -3
-
-typedef struct alu {
-  int Matricula;
-  char nome[MAX];
-  int sexo;
-  char dataNascimento[MAX_DATA]; 
-  char CPF[MAX_CPF];
-} Aluno; 
-
-Aluno listAluno[TAM_ALU];
-int qtdAluno = 0;
-int menuAluno();
-int cadastrarAlu (Aluno listAluno[], int qtdAluno);
-
-typedef struct prof {
-  int Matricula;
-  char nome[MAX];
-  int sexo;
-  char dataNascimento[MAX_DATA]; 
-  char CPF[MAX_CPF];
-} Professor; 
-
-typedef struct disc {
-  int codigo;
-  char nome[MAX];
-  int semestre;
-  char professor[MAX]; 
-} Disciplina; 
-=======
 #include "definicoes.h"
 #include "menus.h"
 #include "models.h"
 
-pessoa listAluno[TAM_ALU];
+pessoa listaAluno[TAM_PESSOA];
+pessoa listaProfessor[TAM_PESSOA];
 int qtdAluno = 0;
 int menuAluno();
-int cadastrarAlu (pessoa listAluno[], int qtdAluno);
->>>>>>> ebf97d3 (commit)
+int cadastrarAlu (pessoa listaAluno[], int qtdAluno);
 
 void main() {
   int opcao, sair = false;
@@ -80,7 +41,7 @@ void main() {
                 break;
               }
               case 1:{
-                int retorno = cadastrarAlu(listAluno, qtdAluno);
+                int retorno = cadastrarAlu(listaAluno, qtdAluno);
                 
               }
               
@@ -113,55 +74,3 @@ void main() {
      if (CPF > 99999999 || CPF < 10000000)
         puts("CPF inválido") */
 }
-
-<<<<<<< HEAD
-int cadastrarAlu (Aluno listAluno[], int qtdAluno){
-=======
-int cadastrarAlu (pessoa listAluno[], int qtdAluno){
->>>>>>> ebf97d3 (commit)
-  printf ("Cadrasto de aluno\n");
-
-  int matricula;
-  printf ("digite a matricula\n");
-  scanf("%d", &matricula);
-  //G: fazer validacao matricula
-  listAluno[qtdAluno].Matricula = matricula;
-
-  char nome[MAX];
-  printf ("digite o nome do aluno\n");
-  fgets (nome, MAX, stdin);
-  for (int icont = 0; icont < MAX; icont++)
-      listAluno[qtdAluno].nome[icont] = nome[icont];
-
-  int sexo;
-  printf ("digite o sexo, 1 para masculino 0 para feminino\n");
-  scanf("%d", &sexo);
-  
-  if (sexo != 1 && sexo != 0)
-    return SEXO_INVALIDO;
-  else
-    listAluno[qtdAluno].sexo = sexo;
-
-  //G: falta pegar a data de nascimento
-  // G: talvez seja interessante transformara a data em um struct
-  //com dia, mes e ano. assim da pra ver qm e mais velho mais facil.
-
-  char cpf[MAX_CPF];
-  printf ("digite o CPF\n");
-  fgets (cpf, MAX_CPF, stdin);
-
-  int icont = 0;
-  while (cpf[icont] != '\n')
-    icont++;
-  
-  if (icont == 10)
-    //G: fazer o resto da validacao do cpf e ver se n tem cpf repetido
-    for (icont = 0; icont < MAX_CPF; icont++)
-        listAluno[qtdAluno].CPF[icont] = cpf[icont];
-    
-  
-  return 0;
-}
-
-
-
