@@ -7,3 +7,5 @@
 #define SEXO_INVALIDO -2
 #define CPF_INVALIDO -3
 #define DATA_INVALIDA -4
+
+#define EXCLUSAO_SUCESSO -5
