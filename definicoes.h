@@ -1,11 +1,17 @@
 #define MAX_DATA 10
 #define MAX 255 
+#define TAM_DISCIPLINA 255
 #define TAM_PESSOA 255
+
 #define MAX_CPF 13
 
 #define MATRICULA_INVALIDA -1
 #define SEXO_INVALIDO -2
 #define CPF_INVALIDO -3
 #define DATA_INVALIDA -4
-
 #define EXCLUSAO_SUCESSO -5
+#define TA_CHEIO_PAIZAO -6
+#define CODIGO_INVALIDO -7
+#define SEMESTRE_INVALIDO -8
+#define PROFESSOR_INVALIDO -9
+#define NOME_INVALIDO -10
