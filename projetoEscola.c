@@ -154,6 +154,16 @@ void main() {
               
               break;             
               }
+              case 3:{
+              int retorno = atualizarProf(listaProfessor, qtdProfessor);
+                if (retorno == MATRICULA_INVALIDA)
+                printf("Matricula inválida\n");
+                else if (retorno == LISTA_VAZIA)
+                printf("Lista Vazia.\n");
+                else 
+                printf("Professor atualizado!\n");
+                break;
+              }
             }
           } while (!sairProfessor);
           break;
@@ -319,6 +329,7 @@ int listarAluno(pessoa listaAluno[], int qtdAluno){
 
 }
 
+// Atualizaçao Aluno
 int atualizarAluno(pessoa listaAluno[], int qtdAluno, data dia, data mes, data ano){
   int Matricula;
   int iCont;
@@ -510,3 +521,84 @@ int cadastrarProf (pessoa listaProfessor[], int qtdProfessor){
       listaProfessor[qtdProfessor].ativo = true;
   }return 0;
 }
+
+// Atualizacao professor
+int atualizarProf(pessoa listaProfessor[], int qtdProfessor , data dia, data mes, data ano){
+  int Matricula;
+  int iCont;
+  bool achou = false;
+  bool sair = false;
+  
+  printf("Menu Atualizacao\n");
+  if(qtdProfessor == 0){
+    return LISTA_VAZIA;
+    } else {
+      printf("Digite a matricula do professor que deseja atualizar: ");
+      scanf("%d", &Matricula);
+      getchar();
+        
+      for(iCont = 0; iCont < TAM_PESSOA; iCont++){
+        if(listaProfessor[iCont].matricula == Matricula){
+          achou = true;
+          if (listaProfessor[iCont].ativo == true){
+          int opcaoAtualizar = 0; 
+            do{
+            printf("Digite a opcao que deseja atualizar: \n");
+            printf ("0 - Voltar\n");
+            printf ("1 - Nome\n");
+            printf ("2 - CPF\n");
+            printf ("3 - Data de nascimento\n");
+            scanf("%d", &opcaoAtualizar); 
+            getchar();
+
+            switch (opcaoAtualizar){
+              case 0:{
+                sair = true;
+                break;
+              }
+              case 1:{
+                char novoNome [MAX];
+                printf("digite o novo nome:\n");
+                fgets(novoNome, MAX, stdin);
+                strcpy(listaProfessor[iCont].nome, novoNome);
+                
+                break;
+              }
+              case 2:{
+                char novoCpf[MAX_CPF];
+                printf("Digite o novo CPF: \n");
+                fgets(novoCpf, MAX_CPF, stdin);
+                strcpy(listaProfessor[iCont].CPF, novoCpf);
+                break;
+              }
+              case 3:{
+                  int novoDia, novoMes, novoAno;
+                  printf("digite o dia correto: (data de nascimento) ");
+                  scanf("%d", &novoDia);
+                  getchar();
+                  printf("digite o mes correto: (data de nascimento) ");
+                  scanf("%d", &novoMes);
+                  getchar();
+                  printf("digite o ano correto: (data de nascimento) ");
+                  scanf("%d", &novoAno);
+                  getchar();
+
+                  listaProfessor[iCont].dataNascimento->dia = novoDia;
+                  listaProfessor[iCont].dataNascimento->mes = novoMes;
+                  listaProfessor[iCont].dataNascimento->ano = novoAno;
+
+                break;
+              }
+              default:{
+                printf("Opcao invalida\n");
+              }
+            }   
+          } while(sair == false);
+        }  
+      }  
+    }
+    if (!achou){
+      return MATRICULA_INVALIDA;
+    }
+  }
+} 
