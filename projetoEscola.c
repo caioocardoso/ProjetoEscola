@@ -3,38 +3,23 @@
 #include <stdbool.h>
 #include "definicoes.h"
 #include <string.h>
+#include "models.h"
 
-typedef struct {
-  int dia;
-  int mes;
-  int ano;
-}data;
-
-typedef struct {
-  int matricula;
-  char nome[MAX];
-  int sexo;
-  data dataNascimento[MAX_DATA];
-  char CPF[MAX_CPF];
-  int ativo;
-} pessoa; 
-
-typedef struct {
-  int codigo;
-  char nome[MAX];
-  int semestre;
-  char professor[MAX]; 
-} materia;
-
-pessoa listaAluno[TAM_PESSOA];
-pessoa listaProfessor[TAM_PESSOA];
-int qtdAluno = 0;
-int qtdProfessor = 0;
 int menuAluno();
 int cadastrarAlu (pessoa listaAluno[], int qtdAluno);
+int listarAluno(pessoa listaAluno[]);
+int exclusaoAluno(pessoa listaAluno[]);
+int menuProfessor();
+int cadastrarProf (pessoa listaProfessor[], int qtdProfessor);
+int menuDisciplina();
+int cadastrarDisc(disciplina listaDisciplina[], int qtdDisciplina);
+int inserirAluno(disciplina listaDisciplina[]);
 
 void main() {
   int opcao, sair = false;
+
+for (int icont = 0; icont <TAM_DISCIPLINA; icont++)
+    listaDisciplina[icont].posicaoDisciplina = 0;
 
   do {
       printf ("Menu projeto escola\n");
@@ -90,7 +75,7 @@ void main() {
                 break;
               }
               case 2:{
-                listarAluno(listaAluno, qtdAluno);
+                listarAluno(listaAluno);
                  
                 break;
               }
@@ -106,7 +91,7 @@ void main() {
               }
               case 4:{
                 opcaoAluno = 0;
-                opcaoAluno = exclusaoAluno(listaAluno, qtdAluno);
+                opcaoAluno = exclusaoAluno(listaAluno);
                 
                 if(opcaoAluno == EXCLUSAO_SUCESSO)
                   printf("Usuario excluido com sucesso!\n");
@@ -120,7 +105,7 @@ void main() {
           } while (!sairAluno);
           break;
         }
-        /*case 2:{
+        case 2:{
           int opcaoProfessor;
           int sairProfessor = false;
           
@@ -160,9 +145,85 @@ void main() {
         }
         case 3:{
           printf ("Você está no Menu disciplina\n");
-          
+
+          int opcaoDisc;
+          int sairDisc = false;
+
+          do{
+              opcaoDisc = menuDisciplina();
+
+              switch (opcaoDisc)
+              {
+                case 0:{
+                  sairDisc = true;
+                  break;
+                }
+
+                case 1:{
+                  int retorno = cadastrarDisc(listaDisciplina, qtdDisciplina);
+
+                  if (retorno == TA_CHEIO_PAIZAO)
+                      printf ("Nao tem espaco para noas disciplinas, paizao");
+                  else if (retorno == CODIGO_INVALIDO)
+                      printf ("Codigo invalido");
+                  else if (retorno == SEMESTRE_INVALIDO)
+                      printf ("Semestre invalido");
+                  else if (retorno == NOME_INVALIDO)
+                      printf ("Nome invalido");
+                  else if (retorno == PROFESSOR_INVALIDO)
+                      printf ("Professor invalido");
+                  else{
+                      printf ("Cadrasto realizado com sucesso!");
+                      qtdDisciplina++;
+                  }
+                  
+
+                  break;
+                }
+
+                case 2:{
+                  printf ("Listar Disciplina\n");
+                  break;
+                }
+                case 3:{
+                  printf ("Atualizar Disciplina\n");
+                  break;
+                }
+                case 4:{
+                  printf ("4 - inserir aluno \n");
+
+                  int retorno = inserirAluno(listaDisciplina);
+
+                  if (retorno == TA_CHEIO_PAIZAO)
+                    printf ("Nao tem mais espaco na sala paizao\n");
+                  else if (retorno == CODIGO_INVALIDO)
+                    printf ("Codigo invalido\n");
+                  else if (retorno == MATRICULA_INVALIDA)
+                    printf ("Matricula invalida\n");
+                  else{
+                    printf ("Aluno inserido com sucesso");
+                  }
+
+
+                  break;
+                }
+                case 5:{
+                  
+                }
+                case 6:{
+                  
+                }
+                
+
+                default:
+                  break;
+              }
+
+
+          }while (!sairDisc);
+
           break;
-        }*/
+        }
         default:{
           printf ("Opcao invalida\n");
         }
@@ -263,8 +324,8 @@ int cadastrarAlu (pessoa listaAluno[], int qtdAluno){
       listaAluno[qtdAluno].ativo = true;
   }return 0;
 }
-  
-int listarAluno(pessoa listaAluno[], int qtdAluno){
+
+int listarAluno(pessoa listaAluno[]){
   char opcaoLista;
   int sairLista = false;
   int achou = false;
@@ -401,7 +462,7 @@ int atualizarAluno(pessoa listaAluno[], int qtdAluno, data dia, data mes, data a
 
   
 
-int exclusaoAluno(pessoa listaAluno[], int qtdAluno){
+int exclusaoAluno(pessoa listaAluno[]){
   int Matricula;
   int iCont;
   printf("Menu Exclusão\n");
@@ -509,4 +570,137 @@ int cadastrarProf (pessoa listaProfessor[], int qtdProfessor){
       listaProfessor->dataNascimento->ano = ano;
       listaProfessor[qtdProfessor].ativo = true;
   }return 0;
+}
+
+
+// disciplina
+
+
+int menuDisciplina(){
+  int opcaoDisciplina;
+  printf ("Menu Disciplina\n");
+  printf ("0 - Voltar\n");
+  printf ("1 - Cadastrar Disciplina\n");
+  printf ("2 - Listar Disciplina\n");
+  printf ("3 - Atualizar Disciplina\n");
+  printf ("4 - inserir aluno lembrar de zerar o vetor de podicao (faz isso dento do switch na opcao 4) \n");
+  printf ("5 - excluir aluno\n");
+  printf ("5 - Excluir Disciplina\n");
+  scanf ("%d", &opcaoDisciplina);
+  getchar();
+
+  return opcaoDisciplina;
+}
+
+int cadastrarDisc(disciplina listaDisciplina[], int qtdDisciplina){
+
+  if (qtdDisciplina == TAM_DISCIPLINA)
+      return TA_CHEIO_PAIZAO;
+
+  printf ("Cadrasto de disciplinas\n");
+
+  int codigo;
+  printf ("Digite o codigo da disciplina\n");
+  scanf ("%d", &codigo);
+  getchar();
+
+  if (codigo <= 0)
+    return CODIGO_INVALIDO;
+  else
+    for (int icont = 0; icont < TAM_DISCIPLINA; icont++)
+        if (codigo == listaDisciplina[icont].codigo)
+            return CODIGO_INVALIDO;
+  
+  char nome[MAX];
+  int igual = 0;
+  printf ("Digite o nome da disciplina\n");
+  fgets (nome, MAX, stdin);
+
+  for (int icont = 0; icont < TAM_DISCIPLINA; icont++)
+    for (int jcont = 0; jcont < TAM_DISCIPLINA; jcont++)
+        if (nome[jcont] == listaDisciplina[icont].nome[jcont])
+            igual++;
+
+//G: isso foi uma tentativa de comparacao de strings. Se alguem tiver uma ideia melhor que a minha
+// sinta-se a vontade para aplica-la.
+
+  if(igual == TAM_DISCIPLINA)
+    return NOME_INVALIDO;
+
+  int semestre;
+  printf ("Digite o semestre da disciplina\n");
+  scanf ("%d", &semestre);
+  getchar();
+
+
+  if (semestre <= 0)
+      return SEMESTRE_INVALIDO;
+  else if (semestre > 15)
+      return SEMESTRE_INVALIDO;
+
+
+  int professor;
+  int achou = false;
+  printf ("Digite a matricula do professor da disciplina\n");
+  scanf ("%d", &professor);
+  getchar();
+
+  for (int icont = 0; icont < TAM_PESSOA; icont++)
+      if (professor == listaProfessor[icont].matricula)
+          achou = true;
+
+  if (achou != true)
+      return PROFESSOR_INVALIDO;
+  else {
+    listaDisciplina[qtdDisciplina].codigo = codigo;
+    listaDisciplina[qtdDisciplina].professor = professor;
+    listaDisciplina[qtdDisciplina].semestre = semestre;
+    listaDisciplina[qtdDisciplina].ativo = true;
+        
+
+    for (int icont = 0; icont < MAX; icont++)
+      listaDisciplina[qtdDisciplina].nome[icont] = nome[icont];
+  }
+}
+
+int inserirAluno(disciplina listaDisciplina[]) {
+    int icont;
+    int codigo, matricula;
+    int achoucod = false, achoualuno = false;
+
+    if (listaDisciplina->posicaoDisciplina == MAX_ALUNO)
+        return TA_CHEIO_PAIZAO;
+
+    printf("Qual codigo da materia que voce quer inserir o aluno: ");
+    scanf("%d", &codigo);
+
+    for (icont = 0; icont < TAM_DISCIPLINA && !achoucod; icont++) {
+        if (codigo == listaDisciplina[icont].codigo) {
+            achoucod = true;
+        }
+    }
+    icont--; // Ajusta icont para o índice correto
+
+    if (achoucod) {
+        achoucod = false;
+        printf("Qual a matricula do aluno que voce quer inserir nessa materia? ");
+        scanf("%d", &matricula);
+        getchar();
+
+        for (int jcont = 0; jcont < TAM_PESSOA && !achoualuno; jcont++) {
+            if (listaAluno[jcont].matricula == matricula) {
+                achoualuno = true;
+            }
+        }
+
+        if (!achoualuno) {
+            return MATRICULA_INVALIDA;
+        } else {
+            listaDisciplina[icont].alunos[listaDisciplina[icont].posicaoDisciplina] = matricula;
+            listaDisciplina[icont].posicaoDisciplina++;
+        }
+    } else {
+        return CODIGO_INVALIDO;
+    }
+
 }
