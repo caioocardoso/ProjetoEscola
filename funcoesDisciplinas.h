@@ -88,7 +88,7 @@ int inserirAluno(disciplina listaDisciplina[]) {
     scanf("%d", &codigo);
 
     for (icont = 0; icont < TAM_DISCIPLINA && !achoucod; icont++) {
-        if (codigo == listaDisciplina[icont].codigo) {
+        if (codigo == listaDisciplina[icont].codigo && listaDisciplina[icont].ativo == true) {
             achoucod = true;
         }
     }
@@ -101,7 +101,7 @@ int inserirAluno(disciplina listaDisciplina[]) {
         getchar();
 
         for (int jcont = 0; jcont < TAM_PESSOA && !achoualuno; jcont++) {
-            if (listaAluno[jcont].matricula == matricula) {
+            if (listaAluno[jcont].matricula == matricula && listaAluno[icont].ativo == true) {
                 achoualuno = true;
             }
         }
@@ -116,4 +116,18 @@ int inserirAluno(disciplina listaDisciplina[]) {
         return CODIGO_INVALIDO;
     }
 
+}
+
+int excluirDisciplina(disciplina listaDisciplina[]){
+    int codigo;
+
+    printf ("Qual o codigo da materia que voce quer excluir?");
+    scanf ("%d", &codigo);
+    getchar();
+
+    for (int icont = 0; icont < TAM_DISCIPLINA; icont++)
+        if (listaDisciplina[icont].codigo == codigo){
+            listaDisciplina[icont].ativo = false;
+            return EXCLUSAO_SUCESSO;
+        }
 }
