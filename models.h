@@ -2,6 +2,9 @@
 #include <stdbool.h>
 #include "definicoes.h"
 
+#ifndef MODELS_H
+#define MODELS_H
+
 typedef struct {
   int dia;
   int mes;
@@ -34,3 +37,5 @@ disciplina listaDisciplina[TAM_DISCIPLINA];
 int qtdAluno = 0;
 int qtdProfessor = 0;
 int qtdDisciplina = 0;
+
+#endif // MODELS_H
