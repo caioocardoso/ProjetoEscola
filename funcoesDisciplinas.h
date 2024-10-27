@@ -118,6 +118,44 @@ int inserirAluno(disciplina listaDisciplina[]) {
 
 }
 
+int desinserirAluno(disciplina listaDisciplina[]){
+    printf ("excluir aluno da disciplina\n");
+
+    int codigo, matricula;
+    int achouCod = false, achouMat = false;
+    int icont = 0;
+
+    printf ("Qual o codigo da materia que voce quer excluir?");
+    scanf ("%d", &codigo);
+    getchar();
+
+    for (icont; icont < TAM_DISCIPLINA && !achouCod; icont++)
+        if (listaDisciplina[icont].codigo == codigo)
+            achouCod = true;
+    
+    icont--;
+
+    if (achouCod){
+        printf ("Qual a matricula do aluno que sera excluido?");
+        scanf ("%d", &matricula);
+        getchar();
+
+        for (int jcont = 0; jcont < TAM_DISCIPLINA && !achouMat; jcont++)
+            if (listaDisciplina[icont].alunos[jcont] == matricula){
+                listaDisciplina[icont].alunos[jcont] = ALUNO_DESINSERIDO;
+                achouMat = true;
+            }
+
+            if (!achouMat)
+                return MATRICULA_INVALIDA;
+            else
+                printf ("Aluno excluido com sucesso!");
+
+    } else
+        return CODIGO_INVALIDO;
+
+}
+
 int excluirDisciplina(disciplina listaDisciplina[]){
     int codigo;
 
