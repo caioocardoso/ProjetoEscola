@@ -2,6 +2,7 @@
 #define MAX 255 
 #define TAM_DISCIPLINA 255
 #define TAM_PESSOA 255
+#define MAX_ALUNO 40
 
 #define MAX_CPF 13
 

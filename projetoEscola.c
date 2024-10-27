@@ -2,38 +2,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include "definicoes.h"
-
-typedef struct {
-  int dia;
-  int mes;
-  int ano;
-}data;
-
-typedef struct {
-  int matricula;
-  char nome[MAX];
-  int sexo;
-  data dataNascimento[MAX_DATA];
-  char CPF[MAX_CPF];
-  int ativo;
-} pessoa; 
-
-typedef struct {
-  int codigo;
-  char nome[MAX];
-  int semestre;
-  int professor; 
-  int ativo;
-} disciplina;
-
-pessoa listaAluno[TAM_PESSOA];
-pessoa listaProfessor[TAM_PESSOA];
-disciplina listaDisciplina[TAM_DISCIPLINA];
-
-int qtdAluno = 0;
-int qtdProfessor = 0;
-int qtdDisciplina = 0;
-
+#include "models.h"
 
 int menuAluno();
 int cadastrarAlu (pessoa listaAluno[], int qtdAluno);
@@ -43,9 +12,13 @@ int menuProfessor();
 int cadastrarProf (pessoa listaProfessor[], int qtdProfessor);
 int menuDisciplina();
 int cadastrarDisc(disciplina listaDisciplina[], int qtdDisciplina);
+int inserirAluno(disciplina listaDisciplina[]);
 
 void main() {
   int opcao, sair = false;
+
+for (int icont = 0; icont <TAM_DISCIPLINA; icont++)
+    listaDisciplina[icont].posicaoDisciplina = 0;
 
   do {
       printf ("Menu projeto escola\n");
@@ -120,7 +93,7 @@ void main() {
           } while (!sairAluno);
           break;
         }
-        /*case 2:{
+        case 2:{
           int opcaoProfessor;
           int sairProfessor = false;
           
@@ -157,7 +130,7 @@ void main() {
             }
           } while (!sairProfessor);
           break;
-        }*/
+        }
         case 3:{
           printf ("Você está no Menu disciplina\n");
 
@@ -197,14 +170,38 @@ void main() {
                 }
 
                 case 2:{
-                  sairDisc = true;
+                  printf ("Listar Disciplina\n");
                   break;
                 }
                 case 3:{
-                  sairDisc = true;
+                  printf ("Atualizar Disciplina\n");
                   break;
                 }
+                case 4:{
+                  printf ("4 - inserir aluno \n");
 
+                  int retorno = inserirAluno(listaDisciplina);
+
+                  if (retorno == TA_CHEIO_PAIZAO)
+                    printf ("Nao tem mais espaco na sala paizao\n");
+                  else if (retorno == CODIGO_INVALIDO)
+                    printf ("Codigo invalido\n");
+                  else if (retorno == MATRICULA_INVALIDA)
+                    printf ("Matricula invalida\n");
+                  else{
+                    printf ("Aluno inserido com sucesso");
+                  }
+
+
+                  break;
+                }
+                case 5:{
+                  
+                }
+                case 6:{
+                  
+                }
+                
 
                 default:
                   break;
@@ -492,7 +489,7 @@ int menuDisciplina(){
   printf ("1 - Cadastrar Disciplina\n");
   printf ("2 - Listar Disciplina\n");
   printf ("3 - Atualizar Disciplina\n");
-  printf ("4 - inserir aluno\n");
+  printf ("4 - inserir aluno lembrar de zerar o vetor de podicao (faz isso dento do switch na opcao 4) \n");
   printf ("5 - excluir aluno\n");
   printf ("5 - Excluir Disciplina\n");
   scanf ("%d", &opcaoDisciplina);
@@ -570,4 +567,46 @@ int cadastrarDisc(disciplina listaDisciplina[], int qtdDisciplina){
     for (int icont = 0; icont < MAX; icont++)
       listaDisciplina[qtdDisciplina].nome[icont] = nome[icont];
   }
+}
+
+int inserirAluno(disciplina listaDisciplina[]) {
+    int icont;
+    int codigo, matricula;
+    int achoucod = false, achoualuno = false;
+
+    if (listaDisciplina->posicaoDisciplina == MAX_ALUNO)
+        return TA_CHEIO_PAIZAO;
+
+    printf("Qual codigo da materia que voce quer inserir o aluno: ");
+    scanf("%d", &codigo);
+
+    for (icont = 0; icont < TAM_DISCIPLINA && !achoucod; icont++) {
+        if (codigo == listaDisciplina[icont].codigo) {
+            achoucod = true;
+        }
+    }
+    icont--; // Ajusta icont para o índice correto
+
+    if (achoucod) {
+        achoucod = false;
+        printf("Qual a matricula do aluno que voce quer inserir nessa materia? ");
+        scanf("%d", &matricula);
+        getchar();
+
+        for (int jcont = 0; jcont < TAM_PESSOA && !achoualuno; jcont++) {
+            if (listaAluno[jcont].matricula == matricula) {
+                achoualuno = true;
+            }
+        }
+
+        if (!achoualuno) {
+            return MATRICULA_INVALIDA;
+        } else {
+            listaDisciplina[icont].alunos[listaDisciplina[icont].posicaoDisciplina] = matricula;
+            listaDisciplina[icont].posicaoDisciplina++;
+        }
+    } else {
+        return CODIGO_INVALIDO;
+    }
+
 }
