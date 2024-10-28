@@ -79,7 +79,7 @@ int cadastrarProf (pessoa listaProfessor[], int qtdProfessor){
   return 0;
 }
 
-int listarProfessor(pessoa listaProfessor[]){
+void listarProfessor(pessoa listaProfessor[]){
   char opcaoLista;
   int sairLista = false;
   int achou = false;

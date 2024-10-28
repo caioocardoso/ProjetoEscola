@@ -40,9 +40,9 @@ int menuDisciplina(){
   printf ("1 - Cadastrar Disciplina\n");
   printf ("2 - Listar Disciplina\n");
   printf ("3 - Atualizar Disciplina\n");
-  printf ("4 - inserir aluno lembrar de zerar o vetor de podicao (faz isso dento do switch na opcao 4) \n");
+  printf ("4 - inserir aluno\n");
   printf ("5 - excluir aluno\n");
-  printf ("5 - Excluir Disciplina\n");
+  printf ("6 - Excluir Disciplina\n");
   scanf ("%d", &opcaoDisciplina);
   getchar();
 
