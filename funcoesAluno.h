@@ -84,7 +84,7 @@ int cadastrarAlu (pessoa listaAluno[], int qtdAluno){
 
 int listarAluno(){
     int opcaoListar;
-    printf ("Como deseja listar od alunos?\n");
+    printf ("Como deseja listar os alunos?\n");
     printf ("1 - Listar por ordem de matricula\n");
     printf ("2 - Listar por sexo\n");
     printf ("3 - Listar por nome\n");
