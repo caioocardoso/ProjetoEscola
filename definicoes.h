@@ -2,7 +2,7 @@
 #define MAX 255 
 #define TAM_DISCIPLINA 255
 #define TAM_PESSOA 255
-#define MAX_ALUNO 100
+#define MAX_ALUNO 40
 
 #define MAX_CPF 13
 
@@ -18,5 +18,4 @@
 #define PROFESSOR_INVALIDO -10
 #define NOME_INVALIDO -11
 #define MATRICULA_REALIZADA -12
-#define ALUNO_DESINSERIDO -13
 

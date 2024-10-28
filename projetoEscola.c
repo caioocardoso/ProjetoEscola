@@ -11,14 +11,10 @@
 
 int menuAluno();
 int cadastrarAlu (pessoa listaAluno[], int qtdAluno);
-int listarAluno();
-int listarAlunoPadrao(pessoa listaAluno[]);
-void listarAlunoSexo(pessoa listaAluno[]);
+int listarAluno(pessoa listaAluno[]);
 int exclusaoAluno(pessoa listaAluno[]);
-
 int menuProfessor();
 int cadastrarProf (pessoa listaProfessor[], int qtdProfessor);
-
 int menuDisciplina();
 int cadastrarDisc(disciplina listaDisciplina[], int qtdDisciplina);
 int inserirAluno(disciplina listaDisciplina[]);
@@ -28,14 +24,6 @@ void main() {
 
 for (int icont = 0; icont <TAM_DISCIPLINA; icont++)
     listaDisciplina[icont].posicaoDisciplina = 0;
-//limpa as posicoes dos alunos dentro para poder ser usado no vetor de alunos dentro do struct de disciplinas
-// para que seja possivel incrementalas;
-
-for (int icont = 0; icont < TAM_DISCIPLINA; icont++)
-  for (int jcont = 0; jcont < MAX_ALUNO; jcont++)
-      listaDisciplina[icont].alunos[jcont] = 0;
-//limpa o vetor de alunos do struct de disciplinas para que nao haja erros na hora de pesquisar umas matricula
-
 
   do {
       printf ("Menu projeto escola\n");
@@ -155,6 +143,9 @@ for (int icont = 0; icont < TAM_DISCIPLINA; icont++)
               
               break;             
               }
+              case 2:{
+                listarProfessor(listaProfessor);
+              }
             }
           } while (!sairProfessor);
           break;
@@ -174,7 +165,7 @@ for (int icont = 0; icont < TAM_DISCIPLINA; icont++)
                   sairDisc = true;
                   break;
                 }
-
+\
                 case 1:{
                   int retorno = cadastrarDisc(listaDisciplina, qtdDisciplina);
 
@@ -206,7 +197,7 @@ for (int icont = 0; icont < TAM_DISCIPLINA; icont++)
                   break;
                 }
                 case 4:{
-                  printf ("Inserir aluno \n");
+                  printf ("4 - inserir aluno \n");
 
                   int retorno = inserirAluno(listaDisciplina);
 
@@ -219,31 +210,15 @@ for (int icont = 0; icont < TAM_DISCIPLINA; icont++)
                   else{
                     printf ("Aluno inserido com sucesso");
                   }
+
+
                   break;
                 }
                 case 5:{
-                  int retorno = desinserirAluno;
-
-                  if (retorno == CODIGO_INVALIDO)
-                    printf ("Codigo invalido");
-                  else if (retorno == MATRICULA_INVALIDA)
-                    printf ("Matricula invalida");
-                  else
-                    printf ("Aluno excluido com sucesso");
-                   
                   
                 }
                 case 6:{
-                  printf ("Excluir Disciplina\n");
-
-                  int retorno = excluirDisciplina(listaDisciplina);
-
-                  if (retorno == EXCLUSAO_SUCESSO)
-                      printf ("Exclusao realizada com sucesso!");
-                  else
-                      printf ("Nao foi possivel excluir a disciplina");
-
-                  break;
+                  
                 }
                 
 
