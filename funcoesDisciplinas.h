@@ -169,3 +169,77 @@ int excluirDisciplina(disciplina listaDisciplina[]){
             return EXCLUSAO_SUCESSO;
         }
 }
+
+int atualizarDisciplina(disciplina listaDisciplina[], int qtdDisciplina){
+int codigo;
+int iCont;
+bool achou = false;
+bool sair = false;
+
+ printf("Menu Atualizacao\n");
+  if(qtdDisciplina == 0){
+    return LISTA_VAZIA;
+    } else {
+      printf("Digite o codigo da disciplina que deseja atualizar: ");
+      scanf("%d", &codigo);
+      getchar();
+
+        for(iCont = 0; iCont < qtdDisciplina; iCont++){
+            if(listaDisciplina[iCont].codigo == codigo){
+            achou = true;
+            printf(" -Voce esta alterando a disciplina %s .- \n", listaDisciplina[iCont].nome);
+
+            int opcaoAtualizarDisc; 
+            do{
+            printf("Digite a opcao que deseja atualizar: \n");
+            printf ("0 - Voltar\n");
+            printf ("1 - Nome\n");
+            printf ("2 - Semestre\n");
+            printf ("3 - Professor\n");
+            scanf("%d", &opcaoAtualizarDisc); 
+            getchar();
+
+                switch (opcaoAtualizarDisc){
+                    case 0:{
+                        sair = true;
+                        break;
+                    }
+                    case 1:{
+                        char novoNome [MAX];
+                        printf("digite o novo nome da disciplina:\n");
+                        fgets(novoNome, MAX, stdin);
+                        strcpy(listaDisciplina[iCont].nome, novoNome);
+                        break;
+                    }
+                    case 2:{
+                        int novoSemestre;
+                        printf("Digite o semestre correto: \n");
+                        scanf("%d \n", &novoSemestre);
+                        listaDisciplina[iCont].semestre = novoSemestre;
+                        break;
+                    }
+                    case 3:{
+                        int codProfNovo;
+                        bool achouProf;
+                        printf("Digite a matricula do novo professor: \n");
+                        scanf("%d \n", &codProfNovo);
+
+                        for (int jcont = 0; jcont < TAM_PESSOA; jcont++)
+                            if (codProfNovo == listaProfessor[jcont].matricula)
+                                achouProf = true;
+
+                        if (achouProf != true)
+                            return CODIGO_INVALIDO;
+                    }
+                    default:{
+                        printf("Opcao invalida \n");
+                        break;
+                    }
+                }
+            } while(sair == false);
+            }    
+        }
+        if (!achou)
+        return CODIGO_INVALIDO;
+    }   
+} 

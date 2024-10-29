@@ -161,6 +161,16 @@ for (int icont = 0; icont < TAM_DISCIPLINA; icont++)
                 
                 break;
               }
+              case 3:{
+                int retorno = atualizarProfessor(listaProfessor, qtdProfessor);
+                if (retorno == MATRICULA_INVALIDA)
+                printf("Matricula inválida\n");
+                else if (retorno == LISTA_VAZIA)
+                printf("Lista Vazia.\n");
+                else 
+                printf("Professor atualizado!\n");
+                break;
+              }
             }
           } while (!sairProfessor);
           break;
@@ -185,17 +195,17 @@ for (int icont = 0; icont < TAM_DISCIPLINA; icont++)
                   int retorno = cadastrarDisc(listaDisciplina, qtdDisciplina);
 
                   if (retorno == TA_CHEIO_PAIZAO)
-                      printf ("Nao tem espaco para noas disciplinas, paizao");
+                      printf ("Nao tem espaco para novas disciplinas.\n");
                   else if (retorno == CODIGO_INVALIDO)
-                      printf ("Codigo invalido");
+                      printf ("Codigo invalido \n");
                   else if (retorno == SEMESTRE_INVALIDO)
-                      printf ("Semestre invalido");
+                      printf ("Semestre invalido \n");
                   else if (retorno == NOME_INVALIDO)
-                      printf ("Nome invalido");
+                      printf ("Nome invalido \n");
                   else if (retorno == PROFESSOR_INVALIDO)
-                      printf ("Professor invalido");
+                      printf ("Professor invalido \n");
                   else{
-                      printf ("Cadrasto realizado com sucesso!");
+                      printf ("Cadrasto realizado com sucesso! \n");
                       qtdDisciplina++;
                   }
                   
@@ -209,6 +219,13 @@ for (int icont = 0; icont < TAM_DISCIPLINA; icont++)
                 }
                 case 3:{
                   printf ("Atualizar Disciplina\n");
+                  int retorno = atualizarDisciplina(listaDisciplina, qtdDisciplina);
+                  if (retorno == LISTA_VAZIA)
+                  printf("Lista Vazia.\n");
+                  else if (retorno == CODIGO_INVALIDO)
+                  printf ("Codigo invalido. \n");
+                  else
+                  printf("Disciplina atualizada!\n");
                   break;
                 }
                 case 4:{
@@ -223,7 +240,7 @@ for (int icont = 0; icont < TAM_DISCIPLINA; icont++)
                   else if (retorno == MATRICULA_INVALIDA)
                     printf ("Matricula invalida\n");
                   else{
-                    printf ("Aluno inserido com sucesso");
+                    printf ("Aluno inserido com sucesso \n");
                   }
                   break;
                 }
@@ -231,11 +248,11 @@ for (int icont = 0; icont < TAM_DISCIPLINA; icont++)
                   int retorno = desinserirAluno;
 
                   if (retorno == CODIGO_INVALIDO)
-                    printf ("Codigo invalido");
+                    printf ("Codigo invalido \n");
                   else if (retorno == MATRICULA_INVALIDA)
-                    printf ("Matricula invalida");
+                    printf ("Matricula invalida \n");
                   else
-                    printf ("Aluno excluido com sucesso");
+                    printf ("Aluno excluido com sucesso \n");
                    
                   
                 }
@@ -245,9 +262,9 @@ for (int icont = 0; icont < TAM_DISCIPLINA; icont++)
                   int retorno = excluirDisciplina(listaDisciplina);
 
                   if (retorno == EXCLUSAO_SUCESSO)
-                      printf ("Exclusao realizada com sucesso!");
+                      printf ("Exclusao realizada com sucesso! \n");
                   else
-                      printf ("Nao foi possivel excluir a disciplina");
+                      printf ("Nao foi possivel excluir a disciplina \n");
 
                   break;
                 }

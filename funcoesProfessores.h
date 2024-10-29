@@ -132,3 +132,83 @@ void listarProfessor(pessoa listaProfessor[]){
     }while(!sairLista);
   }
 }
+
+int atualizarProfessor(pessoa listaProfessor[], int qtdProfessor){
+  int Matricula;
+  int iCont;
+  bool achou = false;
+  bool sair = false;
+  
+  printf("Menu Atualizacao\n");
+  if(qtdProfessor == 0){
+    return LISTA_VAZIA;
+    } else {
+      printf("Digite o codigo do Professor que deseja atualizar: ");
+      scanf("%d", &Matricula);
+      getchar();
+        
+      for(iCont = 0; iCont < TAM_PESSOA; iCont++){
+        if(listaProfessor[iCont].matricula == Matricula){
+          achou = true;
+          if (listaProfessor[iCont].ativo == true){
+          int opcaoAtualizar; 
+            do{
+            printf("Digite a opcao que deseja atualizar: \n");
+            printf ("0 - Voltar\n");
+            printf ("1 - Nome\n");
+            printf ("2 - CPF\n");
+            printf ("3 - Data de nascimento\n");
+            scanf("%d", &opcaoAtualizar); 
+            getchar();
+
+            switch (opcaoAtualizar){
+              case 0:{
+                sair = true;
+                break;
+              }
+              case 1:{
+                char novoNome [MAX];
+                printf("digite o novo nome:\n");
+                fgets(novoNome, MAX, stdin);
+                strcpy(listaProfessor[iCont].nome, novoNome);
+                
+                break;
+              }
+              case 2:{
+                char novoCpf[MAX_CPF];
+                printf("Digite o novo CPF: \n");
+                fgets(novoCpf, MAX_CPF, stdin);
+                strcpy(listaProfessor[iCont].CPF, novoCpf);
+                break;
+              }
+              case 3:{
+                  int novoDia, novoMes, novoAno;
+                  printf("digite o dia correto: (data de nascimento) ");
+                  scanf("%d", &novoDia);
+                  getchar();
+                  printf("digite o mes correto: (data de nascimento) ");
+                  scanf("%d", &novoMes);
+                  getchar();
+                  printf("digite o ano correto: (data de nascimento) ");
+                  scanf("%d", &novoAno);
+                  getchar();
+
+                  listaProfessor[iCont].dataNascimento->dia = novoDia;
+                  listaProfessor[iCont].dataNascimento->mes = novoMes;
+                  listaProfessor[iCont].dataNascimento->ano = novoAno;
+
+                break;
+              }
+              default:{
+                printf("Opcao invalida\n");
+              }
+            }   
+          } while(sair == false);
+        }  
+      }  
+    }
+    if (!achou){
+      return MATRICULA_INVALIDA;
+    }
+  }
+} 
