@@ -19,6 +19,8 @@ int exclusaoAluno(pessoa listaAluno[]);
 int menuProfessor();
 int cadastrarProf (pessoa listaProfessor[], int qtdProfessor);
 void listarProfessor(pessoa listaProfessor[]);
+int atualizarProfessor(pessoa listaProfessor[], int qtdProfessor);
+
 
 int menuDisciplina();
 int cadastrarDisc(disciplina listaDisciplina[], int qtdDisciplina);
@@ -160,6 +162,10 @@ for (int icont = 0; icont < TAM_DISCIPLINA; icont++)
                 listarProfessor(listaProfessor);
                 
                 break;
+              }
+              case 3:{
+                atualizarProfessor(listaProfessor, qtdProfessor);
+
               }
             }
           } while (!sairProfessor);
