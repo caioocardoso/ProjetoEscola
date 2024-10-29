@@ -20,6 +20,8 @@ int menuProfessor();
 int cadastrarProf (pessoa listaProfessor[], int qtdProfessor);
 void listarProfessor(pessoa listaProfessor[]);
 int atualizarProfessor(pessoa listaProfessor[], int qtdProfessor);
+int excluirProfessor(pessoa listaProfessor[]);
+
 
 
 int menuDisciplina();
@@ -164,8 +166,27 @@ for (int icont = 0; icont < TAM_DISCIPLINA; icont++)
                 break;
               }
               case 3:{
-                atualizarProfessor(listaProfessor, qtdProfessor);
+                int retorno = atualizarProfessor(listaProfessor, qtdProfessor);
 
+                if (retorno == LISTA_VAZIA)
+                  printf ("Lista vazia\n");
+                else if (retorno == MATRICULA_INVALIDA)
+                  printf ("Matricula invalida\n");
+                else
+                  printf ("Atualizado com sucesso\n");
+
+                break;
+
+              }
+              case 4: {
+                int retorno = excluirProfessor(listaProfessor);
+
+                if (retorno == EXCLUSAO_SUCESSO)
+                  printf ("Professor excluido com sucesso\n");
+                else 
+                  printf ("falha na exclusao do professor");
+
+                break;
               }
             }
           } while (!sairProfessor);

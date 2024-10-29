@@ -213,3 +213,21 @@ int atualizarProfessor(pessoa listaProfessor[], int qtdProfessor)
     }
   }
 }
+
+int excluirProfessor(pessoa listaProfessor[]){
+  int Matricula;
+  int iCont;
+  printf("Menu Exclusão\n");
+  printf("Digite a matricula do professor que se deseja excluir: ");
+  scanf("%d", &Matricula);
+  getchar();
+
+  for(iCont = 0; iCont < TAM_PESSOA; iCont++){
+    if(listaProfessor[iCont].matricula == Matricula){
+      if(listaProfessor[iCont].ativo == true){
+        listaProfessor[iCont].ativo = false;
+        return EXCLUSAO_SUCESSO;
+      }
+    }
+  }
+}
