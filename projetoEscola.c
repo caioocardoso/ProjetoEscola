@@ -14,6 +14,7 @@ int cadastrarAlu (pessoa listaAluno[], int qtdAluno);
 int listarAluno();
 int listarAlunoPadrao(pessoa listaAluno[]);
 void listarAlunoSexo(pessoa listaAluno[]);
+void listarAlunosNome(pessoa listaAluno[], int qtdAluno);
 int exclusaoAluno(pessoa listaAluno[]);
 
 int menuProfessor();
