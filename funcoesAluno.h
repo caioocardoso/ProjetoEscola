@@ -235,23 +235,42 @@ void listarAlunosNome(pessoa listaAluno[], int qtdAluno){
     int sairLista = false;
     int achou = false;
     int Matricula;
+    
+    char nome [MAX][MAX];
+    int matorigin[MAX];
+
+    for (int icont = 0; icont < qtdAluno; icont++)
+      for (int jcont = 0; jcont < MAX; jcont++){
+        nome[icont][jcont] = listaAluno[icont].nome[jcont];
+        matorigin[icont] = listaAluno[icont].matricula;
+      }
+
     printf("Lista de alunos ativos no sistema!\n");
 
-    // Ordenação usando Bubble Sort
+    // Ordenação dos nomes e matrículas
+    char tempNome[MAX];
+    int tempMatricula;
+
     for (int icont = 0; icont < qtdAluno - 1; icont++) {
         for (int jcont = 0; jcont < qtdAluno - icont - 1; jcont++) {
-            if (strcmp(listaAluno[jcont].nome, listaAluno[jcont + 1].nome) > 0) {
-                // Troca as estruturas Pessoa
-                pessoa temp = listaAluno[jcont];
-                listaAluno[jcont] = listaAluno[jcont + 1];
-                listaAluno[jcont + 1] = temp;
+            if (strcmp(nome[jcont], nome[jcont + 1]) > 0) {
+                // Troca os nomes
+                strcpy(tempNome, nome[jcont]);
+                strcpy(nome[jcont], nome[jcont + 1]);
+                strcpy(nome[jcont + 1], tempNome);
+
+                // Troca as matrículas correspondentes
+                tempMatricula = matorigin[jcont];
+                matorigin[jcont] = matorigin[jcont + 1];
+                matorigin[jcont + 1] = tempMatricula;
             }
         }
     }
 
+
      for(int iCont = 0; iCont < qtdAluno; iCont++){
     if(listaAluno[iCont].ativo == true){
-      printf("Matricula: %d Nome: %s", listaAluno[iCont].matricula, listaAluno[iCont].nome);
+      printf("Matricula: %d Nome: %s", matorigin[iCont], nome[iCont]);
       achou = true;
     }
   }
@@ -296,8 +315,6 @@ void listarAlunosNome(pessoa listaAluno[], int qtdAluno){
   }
 
 }
-
-
 
 int atualizarAluno(pessoa listaAluno[], int qtdAluno){
   int Matricula;
