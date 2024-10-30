@@ -79,10 +79,8 @@ int cadastrarDisc(disciplina listaDisciplina[], int qtdDisciplina){
 int inserirAluno(disciplina listaDisciplina[]) {
     int icont;
     int codigo, matricula;
-    int achoucod = false, achoualuno = false;
-
-    if (listaDisciplina->posicaoDisciplina == MAX_ALUNO)
-        return TA_CHEIO_PAIZAO;
+    int achoucod = false;
+    int achoualuno = false;
 
     printf("Qual codigo da materia que voce quer inserir o aluno: ");
     scanf("%d", &codigo);
@@ -94,23 +92,31 @@ int inserirAluno(disciplina listaDisciplina[]) {
     }
     icont--; // Ajusta icont para o índice correto
 
+     if (listaDisciplina[icont].posicaoDisciplina == MAX_ALUNO)
+        return TA_CHEIO_PAIZAO;
+
     if (achoucod) {
         achoucod = false;
         printf("Qual a matricula do aluno que voce quer inserir nessa materia? ");
         scanf("%d", &matricula);
         getchar();
 
-        for (int jcont = 0; jcont < TAM_PESSOA && !achoualuno; jcont++) {
-            if (listaAluno[jcont].matricula == matricula && listaAluno[icont].ativo == true) {
+        int jcont = 0;
+
+        for (jcont = 0; jcont < TAM_PESSOA && !achoualuno; jcont++) {
+            if (listaAluno[jcont].matricula == matricula && listaAluno[jcont].ativo == true) 
                 achoualuno = true;
-            }
+            
         }
+
+        jcont--;
 
         if (!achoualuno) {
             return MATRICULA_INVALIDA;
         } else {
             listaDisciplina[icont].alunos[listaDisciplina[icont].posicaoDisciplina] = matricula;
             listaDisciplina[icont].posicaoDisciplina++;
+            listaAluno[jcont].disciplinas++;
         }
     } else {
         return CODIGO_INVALIDO;
@@ -122,12 +128,12 @@ int desinserirAluno(disciplina listaDisciplina[]){
     printf ("excluir aluno da disciplina\n");
 
     int codigo, matricula;
-    int achouCod = false, achouMat = false;
+    int achouCod = false;
+    int achouMat = false;
     int icont = 0;
 
     printf ("Qual o codigo da materia que voce quer excluir?");
     scanf ("%d", &codigo);
-    getchar();
 
     for (icont; icont < TAM_DISCIPLINA && !achouCod; icont++)
         if (listaDisciplina[icont].codigo == codigo)
@@ -138,11 +144,11 @@ int desinserirAluno(disciplina listaDisciplina[]){
     if (achouCod){
         printf ("Qual a matricula do aluno que sera excluido?");
         scanf ("%d", &matricula);
-        getchar();
 
         for (int jcont = 0; jcont < TAM_DISCIPLINA && !achouMat; jcont++)
             if (listaDisciplina[icont].alunos[jcont] == matricula){
                 listaDisciplina[icont].alunos[jcont] = ALUNO_DESINSERIDO;
+                listaAluno[jcont].disciplinas--;
                 achouMat = true;
             }
 
@@ -170,6 +176,7 @@ int excluirDisciplina(disciplina listaDisciplina[]){
         }
 }
 
+<<<<<<< HEAD
 int atualizarDisciplina(disciplina listaDisciplina[], int qtdDisciplina){
 int codigo;
 int iCont;
@@ -243,3 +250,65 @@ bool sair = false;
         return CODIGO_INVALIDO;
     }   
 } 
+=======
+void listarDisciplinas(disciplina listaDisciplina[]){
+  char opcaoLista;
+  int sairLista = false;
+  int achou = false;
+  int Codigo;
+  printf("Lista de disciplinas no sistema!\n");
+
+  for(int iCont = 0; iCont < TAM_DISCIPLINA; iCont++){
+    if(listaDisciplina[iCont].ativo == true){
+      printf("Codigo: %d Nome: %s", listaDisciplina[iCont].codigo, listaDisciplina[iCont].nome);
+      achou = true;
+    }
+  }
+  if(achou){
+    do{
+      achou = false;
+      printf("Deseja verificar informacoes mais detalhadas de alguma disciplina? (y/n): ");
+      scanf("%c", &opcaoLista);
+      getchar();
+
+      if(opcaoLista == 'y'){
+        printf("digite o numero de Codigo: ");
+        scanf("%d", &Codigo);
+        getchar();
+
+        for(int iCont = 0; iCont < TAM_DISCIPLINA; iCont++){       	
+          if(listaDisciplina[iCont].codigo == Codigo && listaDisciplina[iCont].ativo == true){
+            achou = true;
+            printf("\n");
+            printf("Codigo: %d\n", Codigo);
+            printf("Nome: %s", listaDisciplina[iCont].nome);
+            printf("Semestre: %d\n", listaDisciplina[iCont].semestre);
+            for(int jCont=0; jCont<TAM_PESSOA; jCont++){
+                if(listaDisciplina[iCont].professor == listaProfessor[jCont].matricula && listaProfessor[jCont].ativo == true)
+                    printf("professor(a): %s", listaProfessor[jCont].nome);
+            }
+            printf("\n");
+            printf("Deseja verificar a lista de alunos cadastrados nessa disciplina? (y/n): ");
+            scanf("%c", &opcaoLista);
+            getchar();
+
+            if(opcaoLista == 'y'){
+                printf("\nLista de alunos cadastrados na Disciplina %s", listaDisciplina[iCont].nome);
+                for(int jCont=0; jCont<MAX_ALUNO; jCont++)
+                    for (int kCont=0; kCont<TAM_PESSOA; kCont++)
+                        if(listaAluno[kCont].ativo == true)
+                            if(listaDisciplina[iCont].alunos[jCont] == listaAluno[kCont].matricula)
+                                printf("Matricula: %d Nome: %s", listaAluno[kCont].matricula, listaAluno[kCont].nome);
+            }
+          }
+        }
+        if(!achou)
+          printf("Codigo Inexistente!\n");        
+      }
+      else
+        sairLista = true;
+    }while(!sairLista);
+  }else
+    printf("Nenhuma disciplina cadasrada.\n");
+}
+>>>>>>> 88e437ae292013c09e14871ec30f30a9ff51a06e
