@@ -15,6 +15,7 @@ int listarAluno();
 int listarAlunoPadrao(pessoa listaAluno[]);
 void listarAlunoSexo(pessoa listaAluno[]);
 void listarAlunosNome(pessoa listaAluno[], int qtdAluno);
+void listarAlunos3Disciplinas (pessoa listaAluno[]);
 int exclusaoAluno(pessoa listaAluno[]);
 
 int menuProfessor();
@@ -32,8 +33,10 @@ int inserirAluno(disciplina listaDisciplina[]);
 void main() {
   int opcao, sair = false;
 
-for (int icont = 0; icont <TAM_DISCIPLINA; icont++)
+for (int icont = 0; icont <TAM_DISCIPLINA; icont++){
     listaDisciplina[icont].posicaoDisciplina = 0;
+    listaAluno[icont].disciplinas = 0;
+}
 //limpa as posicoes dos alunos dentro para poder ser usado no vetor de alunos dentro do struct de disciplinas
 // para que seja possivel incrementalas;
 
