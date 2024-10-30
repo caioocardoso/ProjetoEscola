@@ -23,6 +23,7 @@ void listarProfessor(pessoa listaProfessor[]);
 int menuDisciplina();
 int cadastrarDisc(disciplina listaDisciplina[], int qtdDisciplina);
 int inserirAluno(disciplina listaDisciplina[]);
+void listarDisciplinas(disciplina listaDisciplina[]);
 
 void main() {
   int opcao, sair = false;
@@ -205,6 +206,7 @@ for (int icont = 0; icont < TAM_DISCIPLINA; icont++)
 
                 case 2:{
                   printf ("Listar Disciplina\n");
+                  listarDisciplinas(listaDisciplina);
                   break;
                 }
                 case 3:{
