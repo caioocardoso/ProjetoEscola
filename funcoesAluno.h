@@ -89,6 +89,7 @@ int listarAluno(){
     printf ("2 - Listar por sexo\n");
     printf ("3 - Listar por nome\n");
     printf ("4 - Listar por data de nascimento\n");
+    printf ("5 - Listar alunos matriculados em menos de 3 materias\n");
     scanf ("%d", &opcaoListar);
     getchar();
 
@@ -102,11 +103,22 @@ int listarAluno(){
         listarAlunoSexo(listaAluno);
         break;
     }
-    default:
+    case 3: {
+        listarAlunosNome(listaAluno, qtdAluno);
         break;
     }
-
-
+    case 4:{
+      listarAlunosData(listaAluno);
+      break;
+    }
+    case 5:{
+      listarAlunos3Disciplinas(listaAluno);
+      break;
+    }
+    default:
+      printf ("Opcao invalida");
+        break;
+    }
 }
 
 int listarAlunoPadrao(pessoa listaAluno[]){
@@ -224,6 +236,223 @@ void listarAlunoSexo(pessoa listaAluno[]){
     }while(!sairLista);
   }
 
+}
+
+void listarAlunosNome(pessoa listaAluno[], int qtdAluno){
+
+    char opcaoLista;
+    int sairLista = false;
+    int achou = false;
+    int Matricula;
+    
+    char nome [MAX][MAX];
+    int matorigin[MAX];
+
+    for (int icont = 0; icont < qtdAluno; icont++)
+      for (int jcont = 0; jcont < MAX; jcont++){
+        nome[icont][jcont] = listaAluno[icont].nome[jcont];
+        matorigin[icont] = listaAluno[icont].matricula;
+      }
+
+    printf("Lista de alunos ativos no sistema!\n");
+
+    // Ordenação dos nomes e matrículas
+    char tempNome[MAX];
+    int tempMatricula;
+
+    for (int icont = 0; icont < qtdAluno - 1; icont++) {
+        for (int jcont = 0; jcont < qtdAluno - icont - 1; jcont++) {
+            if (strcmp(nome[jcont], nome[jcont + 1]) > 0) {
+                // Troca os nomes
+                strcpy(tempNome, nome[jcont]);
+                strcpy(nome[jcont], nome[jcont + 1]);
+                strcpy(nome[jcont + 1], tempNome);
+
+                // Troca as matrículas correspondentes
+                tempMatricula = matorigin[jcont];
+                matorigin[jcont] = matorigin[jcont + 1];
+                matorigin[jcont + 1] = tempMatricula;
+            }
+        }
+    }
+
+
+     for(int iCont = 0; iCont < qtdAluno; iCont++){
+    if(listaAluno[iCont].ativo == true){
+      printf("Matricula: %d Nome: %s", matorigin[iCont], nome[iCont]);
+      achou = true;
+    }
+  }
+  if(!achou)
+    printf("Nenhum Aluno cadastrado.\n");
+  else{
+    do{
+      achou = false;   	
+      printf("Deseja verificar informacoes mais detalhadas de algum usuario? (y/n): ");
+      scanf("%c", &opcaoLista);
+      getchar();
+
+      if(opcaoLista == 'y'){
+        printf("digite o numero de matricula: ");
+        scanf("%d", &Matricula);
+        getchar();
+
+        for(int iCont = 0; iCont < TAM_PESSOA; iCont++){       	
+          if(listaAluno[iCont].matricula == Matricula && listaAluno[iCont].ativo == true){
+            achou = true;
+            printf("\n\n");
+            printf("Matricula: %d\n", Matricula);
+            printf("Nome: %s", listaAluno[iCont].nome);
+            printf("Sexo: ");
+            if(listaAluno[iCont].sexo == 1)
+              printf("Masculino\n");
+            else
+              printf("Feminino\n");
+            printf("Data de Nascimento: %02d/%02d/%02d\n", listaAluno[iCont].dataNascimento->dia,
+                                                  		   listaAluno[iCont].dataNascimento->mes,
+                                                  		   listaAluno[iCont].dataNascimento->ano);
+            printf("CPF: %s\n", listaAluno[iCont].CPF);
+            printf("\n");              
+          }
+        }
+        if(!achou)
+          printf("Matricula Inexistente!\n");        
+      }
+      else
+        sairLista = true;
+    }while(!sairLista);
+  }
+
+}
+
+void listarAlunosData(pessoa listaAluno[]){
+  int dataMaisAntiga = 0, dataMaisNova = 0;
+  int iCont;
+  char opcaoLista;
+  int sairLista = false;
+  int achou = false;
+  int Matricula;
+
+  for(iCont = 0; iCont<TAM_PESSOA; iCont++){
+    if(listaAluno[iCont].ativo == true){
+      if(listaAluno[iCont].dataNascimento->ano <= dataMaisAntiga)
+        dataMaisAntiga = listaAluno[iCont].dataNascimento->ano;
+      if(listaAluno[iCont].dataNascimento->ano >= dataMaisNova)
+        dataMaisNova = listaAluno[iCont].dataNascimento->ano;
+    }
+  }
+  
+  for(iCont = dataMaisAntiga; iCont <= dataMaisNova; iCont++){
+    for(int jCont=1; jCont<=12; jCont++){
+      for(int kCont=1; kCont<=31; kCont++){
+        for(int pCont = 0; pCont<TAM_PESSOA; pCont++){
+          if(listaAluno[pCont].dataNascimento->ano == iCont &&
+            listaAluno[pCont].dataNascimento->mes == jCont &&
+            listaAluno[pCont].dataNascimento->dia == kCont &&
+            listaAluno[pCont].ativo == true){
+            printf("Matricula: %d Nome: %s", listaAluno[pCont].matricula, listaAluno[pCont].nome);
+            achou = true;
+          }
+        }
+      }
+    }
+  }
+  
+  if(achou){
+    do{
+      achou = false;   	
+      printf("Deseja verificar informacoes mais detalhadas de algum usuario? (y/n): ");
+      scanf("%c", &opcaoLista);
+      getchar();
+
+      if(opcaoLista == 'y'){
+        printf("digite o numero de matricula: ");
+        scanf("%d", &Matricula);
+        getchar();
+
+        for(int iCont = 0; iCont < TAM_PESSOA; iCont++){       	
+          if(listaAluno[iCont].matricula == Matricula && listaAluno[iCont].ativo == true){
+            achou = true;
+            printf("\n\n");
+            printf("Matricula: %d\n", Matricula);
+            printf("Nome: %s", listaAluno[iCont].nome);
+            printf("Sexo: ");
+            if(listaAluno[iCont].sexo == 1)
+              printf("Masculino\n");
+            else
+              printf("Feminino\n");
+            printf("Data de Nascimento: %02d/%02d/%02d\n", listaAluno[iCont].dataNascimento->dia,
+                                                  		   listaAluno[iCont].dataNascimento->mes,
+                                                  		   listaAluno[iCont].dataNascimento->ano);
+            printf("CPF: %s\n", listaAluno[iCont].CPF);
+            printf("\n");              
+          }
+        }
+        if(!achou)
+          printf("Matricula Inexistente!\n");        
+      }
+      else
+        sairLista = true;
+    }while(!sairLista);
+  }else
+    printf("Nenhum Aluno cadastrado.\n");
+}
+
+void listarAlunos3Disciplinas (pessoa listaAluno[]){
+  char opcaoLista;
+  int sairLista = false;
+  int achou = false;
+  int Matricula;
+
+  printf("Lista de alunos ativos no sistema matriculados em menos de 3 disicplinas!\n");
+
+  for(int iCont = 0; iCont < TAM_PESSOA; iCont++){
+    if(listaAluno[iCont].ativo == true && listaAluno[iCont].disciplinas < 3){
+      printf ("%d", listaAluno[iCont].disciplinas);
+      printf("Matricula: %d Nome: %s", listaAluno[iCont].matricula, listaAluno[iCont].nome);
+      achou = true;
+    }
+  }
+
+  if(!achou)
+    printf("Nenhum Aluno cadastrado.\n");
+  else{
+    do{
+      achou = false;   	
+      printf("Deseja verificar informacoes mais detalhadas de algum usuario? (y/n): ");
+      scanf("%c", &opcaoLista);
+      getchar();
+
+      if(opcaoLista == 'y'){
+        printf("digite o numero de matricula: ");
+        scanf("%d", &Matricula);
+        getchar();
+
+        for(int iCont = 0; iCont < TAM_PESSOA; iCont++){       	
+          if(listaAluno[iCont].matricula == Matricula && listaAluno[iCont].ativo == true){
+            achou = true;
+            printf("\n\n");
+            printf("Matricula: %d\n", Matricula);
+            printf("Nome: %s", listaAluno[iCont].nome);
+            printf("Sexo: ");
+            if(listaAluno[iCont].sexo == 1)
+              printf("Masculino\n");
+            else
+              printf("Feminino\n");
+            printf("Data de Nascimento: %02d/%02d/%02d\n", listaAluno[iCont].dataNascimento->dia,
+                                                  		   listaAluno[iCont].dataNascimento->mes,
+                                                  		   listaAluno[iCont].dataNascimento->ano);
+            printf("CPF: %s\n", listaAluno[iCont].CPF);
+            printf("\n");              
+          }
+        }
+        if(!achou)
+          printf("Matricula Inexistente!\n");        
+      }
+      else
+        sairLista = true;
+    }while(!sairLista);
+  }
 }
 
 int atualizarAluno(pessoa listaAluno[], int qtdAluno){

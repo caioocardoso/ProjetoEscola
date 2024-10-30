@@ -80,37 +80,66 @@ int cadastrarProf (pessoa listaProfessor[], int qtdProfessor){
 }
 
 void listarProfessor(pessoa listaProfessor[]){
+  int opcaoListar;
+    printf ("Como deseja listar os alunos?\n");
+    printf ("1 - Listar por ordem de matricula\n");
+    printf ("2 - Listar por sexo\n");
+    printf ("3 - Listar por nome\n");
+    scanf ("%d", &opcaoListar);
+    getchar();
+
+    switch (opcaoListar)
+    {
+    case 1:{
+        listarProfessorPadrao(listaProfessor);
+        break;
+    }
+    case 2:{
+        listarProfessorSexo(listaProfessor);
+        break;
+    }
+    case 3: {
+        listarProfessorNome(listaProfessor, qtdProfessor);
+        break;
+    }
+    default:
+      printf ("Opcao invalida");
+        break;
+    }
+}
+
+void listarProfessorPadrao(pessoa listaProfessor[]){
   char opcaoLista;
   int sairLista = false;
   int achou = false;
-  int Codigo;
+  int Matricula;
   printf("Lista de professores ativos no sistema!\n");
 
   for(int iCont = 0; iCont < TAM_PESSOA; iCont++){
     if(listaProfessor[iCont].ativo == true){
-      printf("Codigo: %d Nome: %s", listaProfessor[iCont].matricula, listaProfessor[iCont].nome);
+      printf("Matricula: %d Nome: %s", listaProfessor[iCont].matricula, listaProfessor[iCont].nome);
       achou = true;
     }
   }
   if(!achou)
-    printf("Nenhum professor cadastrado.\n");
+    printf("Nenhum Aluno cadastrado.\n");
   else{
     do{
       achou = false;   	
-      printf("Deseja verificar informacoes mais detalhadas de algum professor? (y/n): ");
+      printf("Deseja verificar informacoes mais detalhadas de algum usuario? (y/n): ");
       scanf("%c", &opcaoLista);
       getchar();
 
       if(opcaoLista == 'y'){
-        printf("digite o numero de Codigo: ");
-        scanf("%d", &Codigo);
+        printf("digite o numero de matricula: ");
+        scanf("%d", &Matricula);
         getchar();
 
         for(int iCont = 0; iCont < TAM_PESSOA; iCont++){       	
-          if(listaProfessor[iCont].matricula == Codigo && listaProfessor[iCont].ativo == true){
+          if(listaProfessor[iCont].matricula == Matricula && listaProfessor[iCont].ativo == true){
             achou = true;
             printf("\n\n");
-            printf("Codigo: %d\n", Codigo);
+            printf("Matricula: %d\n", Matricula);
             printf("Nome: %s", listaProfessor[iCont].nome);
             printf("Sexo: ");
             if(listaProfessor[iCont].sexo == 1)
@@ -125,10 +154,240 @@ void listarProfessor(pessoa listaProfessor[]){
           }
         }
         if(!achou)
-          printf("Codigo Inexistente!\n");        
+          printf("Matricula Inexistente!\n");        
+      }
+      else
+        sairLista = true;
+    }while(!sairLista);
+  }
+
+}
+
+void listarProfessorSexo(pessoa listaProfessor[]){
+  char opcaoLista;
+  int sairLista = false;
+  int achou = false;
+  int Matricula;
+  printf("Lista de professores ativos no sistema por sexo!\n");
+
+  for(int iCont = 0; iCont < TAM_PESSOA; iCont++){
+    if(listaProfessor[iCont].ativo == true && listaProfessor[iCont].sexo == 1){
+      printf("Matricula: %d Nome: %s", listaProfessor[iCont].matricula, listaProfessor[iCont].nome);
+      achou = true;
+    }
+  }
+  for(int iCont = 0; iCont < TAM_PESSOA; iCont++){
+    if(listaProfessor[iCont].ativo == true && listaProfessor[iCont].sexo == 0){
+      printf("Matricula: %d Nome: %s", listaProfessor[iCont].matricula, listaProfessor[iCont].nome);
+      achou = true;
+    }
+  }
+
+  if(!achou)
+    printf("Nenhum Aluno cadastrado.\n");
+  else{
+    do{
+      achou = false;   	
+      printf("Deseja verificar informacoes mais detalhadas de algum usuario? (y/n): ");
+      scanf("%c", &opcaoLista);
+      getchar();
+
+      if(opcaoLista == 'y'){
+        printf("digite o numero de matricula: ");
+        scanf("%d", &Matricula);
+        getchar();
+
+        for(int iCont = 0; iCont < TAM_PESSOA; iCont++){       	
+          if(listaProfessor[iCont].matricula == Matricula && listaProfessor[iCont].ativo == true){
+            achou = true;
+            printf("\n\n");
+            printf("Matricula: %d\n", Matricula);
+            printf("Nome: %s", listaProfessor[iCont].nome);
+            printf("Sexo: ");
+            if(listaProfessor[iCont].sexo == 1)
+              printf("Masculino\n");
+            else
+              printf("Feminino\n");
+            printf("Data de Nascimento: %02d/%02d/%02d\n", listaProfessor[iCont].dataNascimento->dia,
+                                                  		   listaProfessor[iCont].dataNascimento->mes,
+                                                  		   listaProfessor[iCont].dataNascimento->ano);
+            printf("CPF: %s\n", listaProfessor[iCont].CPF);
+            printf("\n");              
+          }
+        }
+        if(!achou)
+          printf("Matricula Inexistente!\n");        
+      }
+      else
+        sairLista = true;
+    }while(!sairLista);
+  }
+
+}
+
+void listarProfessorNome(pessoa listaProfessor[], int qtdProfessor){
+
+    char opcaoLista;
+    int sairLista = false;
+    int achou = false;
+    int Matricula;
+    
+    char nome [MAX][MAX];
+    int matorigin[MAX];
+
+    for (int icont = 0; icont < qtdProfessor; icont++)
+      for (int jcont = 0; jcont < MAX; jcont++){
+        nome[icont][jcont] = listaProfessor[icont].nome[jcont];
+        matorigin[icont] = listaProfessor[icont].matricula;
+      }
+
+    printf("Lista de alunos ativos no sistema!\n");
+
+    // Ordenação dos nomes e matrículas
+    char tempNome[MAX];
+    int tempMatricula;
+
+    for (int icont = 0; icont < qtdProfessor - 1; icont++) {
+        for (int jcont = 0; jcont < qtdProfessor - icont - 1; jcont++) {
+            if (strcmp(nome[jcont], nome[jcont + 1]) > 0) {
+                // Troca os nomes
+                strcpy(tempNome, nome[jcont]);
+                strcpy(nome[jcont], nome[jcont + 1]);
+                strcpy(nome[jcont + 1], tempNome);
+
+                // Troca as matrículas correspondentes
+                tempMatricula = matorigin[jcont];
+                matorigin[jcont] = matorigin[jcont + 1];
+                matorigin[jcont + 1] = tempMatricula;
+            }
+        }
+    }
+
+
+     for(int iCont = 0; iCont < qtdProfessor; iCont++){
+    if(listaProfessor[iCont].ativo == true){
+      printf("Matricula: %d Nome: %s", matorigin[iCont], nome[iCont]);
+      achou = true;
+    }
+  }
+  if(!achou)
+    printf("Nenhum Aluno cadastrado.\n");
+  else{
+    do{
+      achou = false;   	
+      printf("Deseja verificar informacoes mais detalhadas de algum usuario? (y/n): ");
+      scanf("%c", &opcaoLista);
+      getchar();
+
+      if(opcaoLista == 'y'){
+        printf("digite o numero de matricula: ");
+        scanf("%d", &Matricula);
+        getchar();
+
+        for(int iCont = 0; iCont < TAM_PESSOA; iCont++){       	
+          if(listaProfessor[iCont].matricula == Matricula && listaProfessor[iCont].ativo == true){
+            achou = true;
+            printf("\n\n");
+            printf("Matricula: %d\n", Matricula);
+            printf("Nome: %s", listaProfessor[iCont].nome);
+            printf("Sexo: ");
+            if(listaProfessor[iCont].sexo == 1)
+              printf("Masculino\n");
+            else
+              printf("Feminino\n");
+            printf("Data de Nascimento: %02d/%02d/%02d\n", listaProfessor[iCont].dataNascimento->dia,
+                                                  		   listaProfessor[iCont].dataNascimento->mes,
+                                                  		   listaProfessor[iCont].dataNascimento->ano);
+            printf("CPF: %s\n", listaProfessor[iCont].CPF);
+            printf("\n");              
+          }
+        }
+        if(!achou)
+          printf("Matricula Inexistente!\n");        
       }
       else
         sairLista = true;
     }while(!sairLista);
   }
 }
+
+
+int atualizarProfessor(pessoa listaProfessor[], int qtdProfessor){
+  int Matricula;
+  int iCont;
+  bool achou = false;
+  bool sair = false;
+
+  printf("Menu Atualizacao\n");
+  if(qtdProfessor == 0){
+    return LISTA_VAZIA;
+    } else {
+      printf("Digite o codigo do Professor que deseja atualizar: ");
+      scanf("%d", &Matricula);
+      getchar();
+
+      for(iCont = 0; iCont < TAM_PESSOA; iCont++){
+        if(listaProfessor[iCont].matricula == Matricula){
+          achou = true;
+          if (listaProfessor[iCont].ativo == true){
+          int opcaoAtualizar; 
+            do{
+            printf("Digite a opcao que deseja atualizar: \n");
+            printf ("0 - Voltar\n");
+            printf ("1 - Nome\n");
+            printf ("2 - CPF\n");
+            printf ("3 - Data de nascimento\n");
+            scanf("%d", &opcaoAtualizar); 
+            getchar();
+
+            switch (opcaoAtualizar){
+              case 0:{
+                sair = true;
+                break;
+              }
+              case 1:{
+                char novoNome [MAX];
+                printf("digite o novo nome:\n");
+                fgets(novoNome, MAX, stdin);
+                strcpy(listaProfessor[iCont].nome, novoNome);
+
+                break;
+              }
+              case 2:{
+                char novoCpf[MAX_CPF];
+                printf("Digite o novo CPF: \n");
+                fgets(novoCpf, MAX_CPF, stdin);
+                strcpy(listaProfessor[iCont].CPF, novoCpf);
+                break;
+              }
+              case 3:{
+                  int novoDia, novoMes, novoAno;
+                  printf("digite o dia correto: (data de nascimento) ");
+                  scanf("%d", &novoDia);
+                  getchar();
+                  printf("digite o mes correto: (data de nascimento) ");
+                  scanf("%d", &novoMes);
+                  getchar();
+                  printf("digite o ano correto: (data de nascimento) ");
+                  scanf("%d", &novoAno);
+                  getchar();
+
+                  listaProfessor[iCont].dataNascimento->dia = novoDia;
+                  listaProfessor[iCont].dataNascimento->mes = novoMes;
+                  listaProfessor[iCont].dataNascimento->ano = novoAno;
+
+                break;
+              }
+              default:{
+                printf("Opcao invalida\n");
+              }
+            }   
+          } while(sair == false);
+        }  
+      }  
+    }
+    if (!achou){
+      return MATRICULA_INVALIDA;
+    }
+  }
+} 
