@@ -35,6 +35,8 @@ int cadastrarDisc(disciplina listaDisciplina[], int qtdDisciplina);
 int inserirAluno(disciplina listaDisciplina[]);
 void listarDisciplinas(disciplina listaDisciplina[]);
 
+int aniversariantes(pessoa listaAluno[], pessoa listaProfessor[]);
+
 void main() {
   int opcao, sair = false;
 
@@ -57,7 +59,9 @@ for (int icont = 0; icont < TAM_DISCIPLINA; icont++)
       printf ("1 - Menu aluno\n");
       printf ("2 - Menu professor\n");
       printf ("3 - Menu disciplina\n");
+      printf ("4 - aniversariantes do mes\n");
 
+      
       scanf ("%d", &opcao);
       getchar();
       
@@ -312,6 +316,16 @@ for (int icont = 0; icont < TAM_DISCIPLINA; icont++)
 
           break;
         }
+
+        case 4: {
+          int retorno = aniversariantes (listaAluno, listaProfessor);
+
+          if (retorno == DATA_INVALIDA)
+            printf ("Mes invalido\n");
+
+          break;
+        }        
+
         default:{
           printf ("Opcao invalida\n");
         }

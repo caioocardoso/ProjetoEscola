@@ -48,3 +48,38 @@ int menuDisciplina(){
 
   return opcaoDisciplina;
 }
+
+int aniversariantes(pessoa listaAluno[], pessoa listaProfessor[]){
+  int mes;
+  char opcaoLista;
+  int sairLista = false;
+  int achou = false;
+  int Matricula;
+
+
+
+  printf ("Estamos em qual mes?\n");
+  scanf ("%d", &mes);
+
+  if (mes > 12 || mes < 1)
+    return DATA_INVALIDA;
+  else {
+    printf ("Lista de aniversairnates do mes\n");
+
+    for (int icont = 0; icont < TAM_PESSOA; icont++)
+      if (listaAluno[icont].dataNascimento->mes == mes){
+        printf("Matricula: %d Nome: %s", listaAluno[icont].matricula, listaAluno[icont].nome);
+        achou = true;
+      }
+    for (int icont = 0; icont < TAM_PESSOA; icont++)
+      if (listaProfessor[icont].dataNascimento->mes == mes){
+        printf("Matricula: %d Nome: %s", listaProfessor[icont].matricula, listaProfessor[icont].nome);
+        achou = true;
+      }
+
+       if(!achou)
+    printf("ninguem cadrastado faz aniversario nesse mes\n");
+
+  }
+
+}
