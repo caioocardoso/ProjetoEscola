@@ -79,10 +79,8 @@ int cadastrarDisc(disciplina listaDisciplina[], int qtdDisciplina){
 int inserirAluno(disciplina listaDisciplina[]) {
     int icont;
     int codigo, matricula;
-    int achoucod = false, achoualuno = false;
-
-    if (listaDisciplina->posicaoDisciplina == MAX_ALUNO)
-        return TA_CHEIO_PAIZAO;
+    int achoucod = false;
+    int achoualuno = false;
 
     printf("Qual codigo da materia que voce quer inserir o aluno: ");
     scanf("%d", &codigo);
@@ -94,23 +92,31 @@ int inserirAluno(disciplina listaDisciplina[]) {
     }
     icont--; // Ajusta icont para o índice correto
 
+     if (listaDisciplina[icont].posicaoDisciplina == MAX_ALUNO)
+        return TA_CHEIO_PAIZAO;
+
     if (achoucod) {
         achoucod = false;
         printf("Qual a matricula do aluno que voce quer inserir nessa materia? ");
         scanf("%d", &matricula);
         getchar();
 
-        for (int jcont = 0; jcont < TAM_PESSOA && !achoualuno; jcont++) {
-            if (listaAluno[jcont].matricula == matricula && listaAluno[icont].ativo == true) {
+        int jcont = 0;
+
+        for (jcont = 0; jcont < TAM_PESSOA && !achoualuno; jcont++) {
+            if (listaAluno[jcont].matricula == matricula && listaAluno[jcont].ativo == true) 
                 achoualuno = true;
-            }
+            
         }
+
+        jcont--;
 
         if (!achoualuno) {
             return MATRICULA_INVALIDA;
         } else {
             listaDisciplina[icont].alunos[listaDisciplina[icont].posicaoDisciplina] = matricula;
             listaDisciplina[icont].posicaoDisciplina++;
+            listaAluno[jcont].disciplinas++;
         }
     } else {
         return CODIGO_INVALIDO;
@@ -143,6 +149,7 @@ int desinserirAluno(disciplina listaDisciplina[]){
         for (int jcont = 0; jcont < TAM_DISCIPLINA && !achouMat; jcont++)
             if (listaDisciplina[icont].alunos[jcont] == matricula){
                 listaDisciplina[icont].alunos[jcont] = ALUNO_DESINSERIDO;
+                listaAluno[jcont].disciplinas--;
                 achouMat = true;
             }
 
