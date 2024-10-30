@@ -140,7 +140,7 @@ for (int icont = 0; icont < TAM_DISCIPLINA; icont++)
               
             } 
             
-          } while (!sairAluno);
+          }while (!sairAluno);
           break;
         }
         case 2:{
@@ -152,7 +152,6 @@ for (int icont = 0; icont < TAM_DISCIPLINA; icont++)
           
           do{
             opcaoProfessor = menuProfessor();
-
             switch (opcaoProfessor){
               case 0:{
                 sairProfessor = true;
