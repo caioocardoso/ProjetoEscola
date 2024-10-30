@@ -55,7 +55,7 @@ for (int icont = 0; icont < TAM_DISCIPLINA; icont++)
           break;
         }
         case 1:{
-          
+          printf("\e[H\e[2J");          
           int opcaoAluno;
           int sairAluno = false;
           
@@ -70,6 +70,7 @@ for (int icont = 0; icont < TAM_DISCIPLINA; icont++)
                 break;
               }
               case 1:{
+                printf("\e[H\e[2J");
                 opcaoAluno = 0;
                 if (qtdAluno == TAM_PESSOA){
                   printf("Lista Cheia, impossivel cadastrar mais alunos!\n");
@@ -93,11 +94,13 @@ for (int icont = 0; icont < TAM_DISCIPLINA; icont++)
                 break;
               }
               case 2:{
+                printf("\e[H\e[2J");
                 listarAluno(listaAluno);
                  
                 break;
               }
               case 3:{
+                printf("\e[H\e[2J");
                 int retorno = atualizarAluno(listaAluno, qtdAluno);
                 if (retorno == MATRICULA_INVALIDA)
                 printf("Matricula inválida\n");
@@ -108,6 +111,7 @@ for (int icont = 0; icont < TAM_DISCIPLINA; icont++)
                 break;
               }
               case 4:{
+                printf("\e[H\e[2J");
                 opcaoAluno = 0;
                 opcaoAluno = exclusaoAluno(listaAluno);
                 
@@ -124,13 +128,13 @@ for (int icont = 0; icont < TAM_DISCIPLINA; icont++)
           break;
         }
         case 2:{
+          printf("\e[H\e[2J");
           int opcaoProfessor;
           int sairProfessor = false;
           
          
           
           do{
-            printf("\e[H\e[2J");
             opcaoProfessor = menuProfessor();
 
             switch (opcaoProfessor){
@@ -139,6 +143,7 @@ for (int icont = 0; icont < TAM_DISCIPLINA; icont++)
                 break;
               }
               case 1:{
+                printf("\e[H\e[2J");
                 int retorno = cadastrarProf(listaProfessor, qtdProfessor);
 
                 if (retorno == MATRICULA_INVALIDA)
@@ -158,6 +163,7 @@ for (int icont = 0; icont < TAM_DISCIPLINA; icont++)
               break;             
               }
               case 2:{
+                printf("\e[H\e[2J");
                 listarProfessor(listaProfessor);
                 
                 break;
@@ -167,6 +173,7 @@ for (int icont = 0; icont < TAM_DISCIPLINA; icont++)
           break;
         }
         case 3:{
+          printf("\e[H\e[2J");
           printf ("Você está no Menu disciplina\n");
 
           int opcaoDisc;
@@ -183,6 +190,7 @@ for (int icont = 0; icont < TAM_DISCIPLINA; icont++)
                 }
 
                 case 1:{
+                  printf("\e[H\e[2J");
                   int retorno = cadastrarDisc(listaDisciplina, qtdDisciplina);
 
                   if (retorno == TA_CHEIO_PAIZAO)
@@ -205,15 +213,18 @@ for (int icont = 0; icont < TAM_DISCIPLINA; icont++)
                 }
 
                 case 2:{
+                  printf("\e[H\e[2J");
                   printf ("Listar Disciplina\n");
                   listarDisciplinas(listaDisciplina);
                   break;
                 }
                 case 3:{
+                  printf("\e[H\e[2J");
                   printf ("Atualizar Disciplina\n");
                   break;
                 }
                 case 4:{
+                  printf("\e[H\e[2J");
                   printf ("Inserir aluno \n");
 
                   int retorno = inserirAluno(listaDisciplina);
@@ -230,6 +241,7 @@ for (int icont = 0; icont < TAM_DISCIPLINA; icont++)
                   break;
                 }
                 case 5:{
+                  printf("\e[H\e[2J");
                   int retorno = desinserirAluno;
 
                   if (retorno == CODIGO_INVALIDO)
@@ -242,6 +254,7 @@ for (int icont = 0; icont < TAM_DISCIPLINA; icont++)
                   
                 }
                 case 6:{
+                  printf("\e[H\e[2J");
                   printf ("Excluir Disciplina\n");
 
                   int retorno = excluirDisciplina(listaDisciplina);
