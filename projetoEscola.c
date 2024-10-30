@@ -16,11 +16,15 @@ int listarAlunoPadrao(pessoa listaAluno[]);
 void listarAlunoSexo(pessoa listaAluno[]);
 void listarAlunosNome(pessoa listaAluno[], int qtdAluno);
 void listarAlunos3Disciplinas (pessoa listaAluno[]);
+int atualizarAluno(pessoa listaAluno[], int qtdAluno);
 int exclusaoAluno(pessoa listaAluno[]);
 
 int menuProfessor();
 int cadastrarProf (pessoa listaProfessor[], int qtdProfessor);
 void listarProfessor(pessoa listaProfessor[]);
+void listarProfessorPadrao(pessoa listaProfessor[]);
+void listarProfessorSexo(pessoa listaProfessor[]);
+void listarProfessorNome(pessoa listaProfessor[], int qtdProfessor);
 int atualizarProfessor(pessoa listaProfessor[], int qtdProfessor);
 int excluirProfessor(pessoa listaProfessor[]);
 
@@ -259,15 +263,15 @@ for (int icont = 0; icont < TAM_DISCIPLINA; icont++)
                   break;
                 }
                 case 5:{
-                  int retorno = desinserirAluno;
+                  int retorno = desinserirAluno(listaDisciplina);
 
                   if (retorno == CODIGO_INVALIDO)
                     printf ("Codigo invalido");
                   else if (retorno == MATRICULA_INVALIDA)
+
                     printf ("Matricula invalida");
-                  else
-                    printf ("Aluno excluido com sucesso");
-                   
+
+                    break;
                   
                 }
                 case 6:{
