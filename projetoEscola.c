@@ -14,11 +14,21 @@ int cadastrarAlu (pessoa listaAluno[], int qtdAluno);
 int listarAluno();
 int listarAlunoPadrao(pessoa listaAluno[]);
 void listarAlunoSexo(pessoa listaAluno[]);
+void listarAlunosNome(pessoa listaAluno[], int qtdAluno);
+void listarAlunos3Disciplinas (pessoa listaAluno[]);
+int atualizarAluno(pessoa listaAluno[], int qtdAluno);
 int exclusaoAluno(pessoa listaAluno[]);
 
 int menuProfessor();
 int cadastrarProf (pessoa listaProfessor[], int qtdProfessor);
 void listarProfessor(pessoa listaProfessor[]);
+void listarProfessorPadrao(pessoa listaProfessor[]);
+void listarProfessorSexo(pessoa listaProfessor[]);
+void listarProfessorNome(pessoa listaProfessor[], int qtdProfessor);
+int atualizarProfessor(pessoa listaProfessor[], int qtdProfessor);
+int excluirProfessor(pessoa listaProfessor[]);
+
+
 
 int menuDisciplina();
 int cadastrarDisc(disciplina listaDisciplina[], int qtdDisciplina);
@@ -28,8 +38,10 @@ void listarDisciplinas(disciplina listaDisciplina[]);
 void main() {
   int opcao, sair = false;
 
-for (int icont = 0; icont <TAM_DISCIPLINA; icont++)
+for (int icont = 0; icont <TAM_DISCIPLINA; icont++){
     listaDisciplina[icont].posicaoDisciplina = 0;
+    listaAluno[icont].disciplinas = 0;
+}
 //limpa as posicoes dos alunos dentro para poder ser usado no vetor de alunos dentro do struct de disciplinas
 // para que seja possivel incrementalas;
 
@@ -162,6 +174,29 @@ for (int icont = 0; icont < TAM_DISCIPLINA; icont++)
                 
                 break;
               }
+              case 3:{
+                int retorno = atualizarProfessor(listaProfessor, qtdProfessor);
+
+                if (retorno == LISTA_VAZIA)
+                  printf ("Lista vazia\n");
+                else if (retorno == MATRICULA_INVALIDA)
+                  printf ("Matricula invalida\n");
+                else
+                  printf ("Atualizado com sucesso\n");
+
+                break;
+
+              }
+              case 4: {
+                int retorno = excluirProfessor(listaProfessor);
+
+                if (retorno == EXCLUSAO_SUCESSO)
+                  printf ("Professor excluido com sucesso\n");
+                else 
+                  printf ("falha na exclusao do professor");
+
+                break;
+              }
             }
           } while (!sairProfessor);
           break;
@@ -230,15 +265,15 @@ for (int icont = 0; icont < TAM_DISCIPLINA; icont++)
                   break;
                 }
                 case 5:{
-                  int retorno = desinserirAluno;
+                  int retorno = desinserirAluno(listaDisciplina);
 
                   if (retorno == CODIGO_INVALIDO)
                     printf ("Codigo invalido");
                   else if (retorno == MATRICULA_INVALIDA)
+
                     printf ("Matricula invalida");
-                  else
-                    printf ("Aluno excluido com sucesso");
-                   
+
+                    break;
                   
                 }
                 case 6:{

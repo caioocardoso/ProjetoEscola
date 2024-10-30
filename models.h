@@ -17,6 +17,7 @@ typedef struct {
   int sexo;
   data dataNascimento[MAX_DATA];
   char CPF[MAX_CPF];
+  int disciplinas;
   int ativo;
 } pessoa; 
 
