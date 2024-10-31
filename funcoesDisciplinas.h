@@ -193,7 +193,7 @@ bool sair = false;
         for(iCont = 0; iCont < qtdDisciplina; iCont++){
             if(listaDisciplina[iCont].codigo == codigo){
             achou = true;
-            printf(" -Voce esta alterando a disciplina %s .- \n", listaDisciplina[iCont].nome);
+            printf("Voce esta alterando a disciplina %s", listaDisciplina[iCont].nome);
 
             int opcaoAtualizarDisc; 
             do{
@@ -212,7 +212,7 @@ bool sair = false;
                     }
                     case 1:{
                         char novoNome [MAX];
-                        printf("digite o novo nome da disciplina:\n");
+                        printf("digite o novo nome da disciplina\n");
                         fgets(novoNome, MAX, stdin);
                         strcpy(listaDisciplina[iCont].nome, novoNome);
                         break;
@@ -220,22 +220,25 @@ bool sair = false;
                     case 2:{
                         int novoSemestre;
                         printf("Digite o semestre correto: \n");
-                        scanf("%d \n", &novoSemestre);
+                        scanf("%d", &novoSemestre);
                         listaDisciplina[iCont].semestre = novoSemestre;
                         break;
                     }
                     case 3:{
                         int codProfNovo;
                         bool achouProf;
+                        int jcont;
                         printf("Digite a matricula do novo professor: \n");
-                        scanf("%d \n", &codProfNovo);
+                        scanf("%d", &codProfNovo);
 
-                        for (int jcont = 0; jcont < TAM_PESSOA; jcont++)
+                        for (jcont = 0; jcont < TAM_PESSOA; jcont++)
                             if (codProfNovo == listaProfessor[jcont].matricula)
                                 achouProf = true;
 
                         if (achouProf != true)
                             return CODIGO_INVALIDO;
+                        else
+                            listaDisciplina[iCont].professor = codProfNovo;
                     }
                     default:{
                         printf("Opcao invalida \n");

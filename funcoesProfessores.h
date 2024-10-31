@@ -85,6 +85,7 @@ void listarProfessor(pessoa listaProfessor[]){
     printf ("1 - Listar por ordem de matricula\n");
     printf ("2 - Listar por sexo\n");
     printf ("3 - Listar por nome\n");
+    printf ("4 - Listar por data de nascimento\n");
     scanf ("%d", &opcaoListar);
     getchar();
 
@@ -101,6 +102,10 @@ void listarProfessor(pessoa listaProfessor[]){
     case 3: {
         listarProfessorNome(listaProfessor, qtdProfessor);
         break;
+    }
+    case 4: {
+      listarProfessorData(listaProfessor);
+      break;
     }
     default:
       printf ("Opcao invalida");
@@ -311,21 +316,93 @@ void listarProfessorNome(pessoa listaProfessor[], int qtdProfessor){
   }
 }
 
+void listarProfessorData(pessoa listaProfessor[]){
+  int dataMaisAntiga = 0, dataMaisNova = 0;
+  int iCont;
+  char opcaoLista;
+  int sairLista = false;
+  int achou = false;
+  int Matricula;
+
+  for(iCont = 0; iCont<TAM_PESSOA; iCont++){
+    if(listaProfessor[iCont].ativo == true){
+      if(listaProfessor[iCont].dataNascimento->ano <= dataMaisAntiga)
+        dataMaisAntiga = listaProfessor[iCont].dataNascimento->ano;
+      if(listaProfessor[iCont].dataNascimento->ano >= dataMaisNova)
+        dataMaisNova = listaProfessor[iCont].dataNascimento->ano;
+    }
+  }
+  
+  for(iCont = dataMaisAntiga; iCont <= dataMaisNova; iCont++){
+    for(int jCont=1; jCont<=12; jCont++){
+      for(int kCont=1; kCont<=31; kCont++){
+        for(int pCont = 0; pCont<TAM_PESSOA; pCont++){
+          if(listaProfessor[pCont].dataNascimento->ano == iCont &&
+            listaProfessor[pCont].dataNascimento->mes == jCont &&
+            listaProfessor[pCont].dataNascimento->dia == kCont &&
+            listaProfessor[pCont].ativo == true){
+            printf("Matricula: %d Nome: %s", listaProfessor[pCont].matricula, listaProfessor[pCont].nome);
+            achou = true;
+          }
+        }
+      }
+    }
+  }
+  
+  if(achou){
+    do{
+      achou = false;   	
+      printf("Deseja verificar informacoes mais detalhadas de algum usuario? (y/n): ");
+      scanf("%c", &opcaoLista);
+      getchar();
+
+      if(opcaoLista == 'y'){
+        printf("digite o numero de matricula: ");
+        scanf("%d", &Matricula);
+        getchar();
+
+        for(int iCont = 0; iCont < TAM_PESSOA; iCont++){       	
+          if(listaProfessor[iCont].matricula == Matricula && listaProfessor[iCont].ativo == true){
+            achou = true;
+            printf("\n\n");
+            printf("Matricula: %d\n", Matricula);
+            printf("Nome: %s", listaProfessor[iCont].nome);
+            printf("Sexo: ");
+            if(listaProfessor[iCont].sexo == 1)
+              printf("Masculino\n");
+            else
+              printf("Feminino\n");
+            printf("Data de Nascimento: %02d/%02d/%02d\n", listaProfessor[iCont].dataNascimento->dia,
+                                                  		   listaProfessor[iCont].dataNascimento->mes,
+                                                  		   listaProfessor[iCont].dataNascimento->ano);
+            printf("CPF: %s\n", listaProfessor[iCont].CPF);
+            printf("\n");              
+          }
+        }
+        if(!achou)
+          printf("Matricula Inexistente!\n");        
+      }
+      else
+        sairLista = true;
+    }while(!sairLista);
+  }else
+    printf("Nenhum Aluno cadastrado.\n");
+}
 
 int atualizarProfessor(pessoa listaProfessor[], int qtdProfessor){
   int Matricula;
   int iCont;
   bool achou = false;
   bool sair = false;
-
+  
   printf("Menu Atualizacao\n");
   if(qtdProfessor == 0){
     return LISTA_VAZIA;
     } else {
-      printf("Digite o codigo do Professor que deseja atualizar: ");
+      printf("Digite a matricula do professor que deseja atualizar: ");
       scanf("%d", &Matricula);
       getchar();
-
+        
       for(iCont = 0; iCont < TAM_PESSOA; iCont++){
         if(listaProfessor[iCont].matricula == Matricula){
           achou = true;
@@ -350,7 +427,7 @@ int atualizarProfessor(pessoa listaProfessor[], int qtdProfessor){
                 printf("digite o novo nome:\n");
                 fgets(novoNome, MAX, stdin);
                 strcpy(listaProfessor[iCont].nome, novoNome);
-
+                
                 break;
               }
               case 2:{
@@ -381,7 +458,7 @@ int atualizarProfessor(pessoa listaProfessor[], int qtdProfessor){
               default:{
                 printf("Opcao invalida\n");
               }
-            }   
+            }
           } while(sair == false);
         }  
       }  
@@ -390,4 +467,22 @@ int atualizarProfessor(pessoa listaProfessor[], int qtdProfessor){
       return MATRICULA_INVALIDA;
     }
   }
-} 
+}
+
+int excluirProfessor(pessoa listaProfessor[]){
+  int Matricula;
+  int iCont;
+  printf("Menu Exclusão\n");
+  printf("Digite a matricula do professor que se deseja excluir: ");
+  scanf("%d", &Matricula);
+  getchar();
+
+  for(iCont = 0; iCont < TAM_PESSOA; iCont++){
+    if(listaProfessor[iCont].matricula == Matricula){
+      if(listaProfessor[iCont].ativo == true){
+        listaProfessor[iCont].ativo = false;
+        return EXCLUSAO_SUCESSO;
+      }
+    }
+  }
+}

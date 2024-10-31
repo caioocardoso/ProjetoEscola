@@ -29,7 +29,6 @@ int atualizarProfessor(pessoa listaProfessor[], int qtdProfessor);
 int excluirProfessor(pessoa listaProfessor[]);
 
 
-
 int menuDisciplina();
 int cadastrarDisc(disciplina listaDisciplina[], int qtdDisciplina);
 int inserirAluno(disciplina listaDisciplina[]);
@@ -295,8 +294,7 @@ for (int icont = 0; icont < TAM_DISCIPLINA; icont++)
                     printf ("Matricula invalida");
                   else
                     printf ("Aluno excluido com sucesso");
-                   
-                  
+                   break;
                 }
                 case 6:{
                   printf("\e[H\e[2J");
