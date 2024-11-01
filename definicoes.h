@@ -4,7 +4,7 @@
 #define TAM_PESSOA 255
 #define MAX_ALUNO 100
 
-#define MAX_CPF 13
+#define MAX_CPF 12
 
 #define MATRICULA_INVALIDA -1
 #define SEXO_INVALIDO -2

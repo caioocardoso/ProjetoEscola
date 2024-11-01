@@ -10,24 +10,23 @@
 #include "funcoesDisciplinas.h"
 
 int menuAluno();
-int cadastrarAlu (pessoa listaAluno[], int qtdAluno);
+int cadastrarAlu(pessoa listaAluno[], int qtdAluno);
 int listarAluno();
 int listarAlunoPadrao(pessoa listaAluno[]);
 void listarAlunoSexo(pessoa listaAluno[]);
 void listarAlunosNome(pessoa listaAluno[], int qtdAluno);
-void listarAlunos3Disciplinas (pessoa listaAluno[]);
+void listarAlunos3Disciplinas(pessoa listaAluno[]);
 int atualizarAluno(pessoa listaAluno[], int qtdAluno);
 int exclusaoAluno(pessoa listaAluno[]);
 
 int menuProfessor();
-int cadastrarProf (pessoa listaProfessor[], int qtdProfessor);
+int cadastrarProf(pessoa listaProfessor[], int qtdProfessor);
 void listarProfessor(pessoa listaProfessor[]);
 void listarProfessorPadrao(pessoa listaProfessor[]);
 void listarProfessorSexo(pessoa listaProfessor[]);
 void listarProfessorNome(pessoa listaProfessor[], int qtdProfessor);
 int atualizarProfessor(pessoa listaProfessor[], int qtdProfessor);
 int excluirProfessor(pessoa listaProfessor[]);
-
 
 int menuDisciplina();
 int cadastrarDisc(disciplina listaDisciplina[], int qtdDisciplina);
@@ -36,303 +35,332 @@ void listarDisciplinas(disciplina listaDisciplina[]);
 
 int aniversariantes(pessoa listaAluno[], pessoa listaProfessor[]);
 
-void main() {
+void main()
+{
   int opcao, sair = false;
 
-for (int icont = 0; icont <TAM_DISCIPLINA; icont++){
+  for (int icont = 0; icont < TAM_DISCIPLINA; icont++)
+  {
     listaDisciplina[icont].posicaoDisciplina = 0;
     listaAluno[icont].disciplinas = 0;
-}
-//limpa as posicoes dos alunos dentro para poder ser usado no vetor de alunos dentro do struct de disciplinas
-// para que seja possivel incrementalas;
+  }
+  // limpa as posicoes dos alunos dentro para poder ser usado no vetor de alunos dentro do struct de disciplinas
+  //  para que seja possivel incrementalas;
 
-for (int icont = 0; icont < TAM_DISCIPLINA; icont++)
-  for (int jcont = 0; jcont < MAX_ALUNO; jcont++)
+  for (int icont = 0; icont < TAM_DISCIPLINA; icont++)
+    for (int jcont = 0; jcont < MAX_ALUNO; jcont++)
       listaDisciplina[icont].alunos[jcont] = 0;
-//limpa o vetor de alunos do struct de disciplinas para que nao haja erros na hora de pesquisar umas matricula
+  // limpa o vetor de alunos do struct de disciplinas para que nao haja erros na hora de pesquisar umas matricula
+
+  do
+  {
+    printf("Menu projeto escola\n");
+    printf("0 - sair\n");
+    printf("1 - Menu aluno\n");
+    printf("2 - Menu professor\n");
+    printf("3 - Menu disciplina\n");
+    printf("4 - aniversariantes do mes\n");
+
+    scanf("%d", &opcao);
+    getchar();
+
+    switch (opcao)
+    {
+    case 0:
+    {
+      sair = true;
+      break;
+    }
+    case 1:
+    {
+      printf("\e[H\e[2J");
+      int opcaoAluno;
+      int sairAluno = false;
 
 
-  do {
-      printf ("Menu projeto escola\n");
-      printf ("0 - sair\n");
-      printf ("1 - Menu aluno\n");
-      printf ("2 - Menu professor\n");
-      printf ("3 - Menu disciplina\n");
-      printf ("4 - aniversariantes do mes\n");
+      do
+      {
+        opcaoAluno = menuAluno();
 
-      
-      scanf ("%d", &opcao);
-      getchar();
-      
-      switch (opcao){
-        case 0:{
-          sair = true;
+        switch (opcaoAluno)
+        {
+        case 0:
+        {
+          sairAluno = true;
           break;
         }
-        case 1:{
-          printf("\e[H\e[2J");          
-          int opcaoAluno;
-          int sairAluno = false;
-          
-         
-          
-          do{
-            opcaoAluno = menuAluno();
-
-            switch (opcaoAluno){
-              case 0:{
-                sairAluno = true;
-                break;
-              }
-              case 1:{
-                printf("\e[H\e[2J");
-                opcaoAluno = 0;
-                if (qtdAluno == TAM_PESSOA){
-                  printf("Lista Cheia, impossivel cadastrar mais alunos!\n");
-                } else{
-                  int retorno = cadastrarAlu(listaAluno, qtdAluno);
-
-                  if (retorno == MATRICULA_INVALIDA)
-                      printf("Matricula invalida\n");
-                  else if (retorno == SEXO_INVALIDO)
-                      printf("sexo invalido\n");
-                  else if (retorno == DATA_INVALIDA)
-                      printf("data invalida\n");
-                  else if (retorno == CPF_INVALIDO)
-                      printf("CPF invalido\n");
-                  else
-                  {
-                    printf ("Cadrasto realizado com sucesso\n");
-                    qtdAluno++;
-                  }
-                }
-                break;
-              }
-              case 2:{
-                printf("\e[H\e[2J");
-                listarAluno(listaAluno);
-                 
-                break;
-              }
-              case 3:{
-                printf("\e[H\e[2J");
-                int retorno = atualizarAluno(listaAluno, qtdAluno);
-                if (retorno == MATRICULA_INVALIDA)
-                printf("Matricula inválida\n");
-                else if (retorno == LISTA_VAZIA)
-                printf("Lista Vazia.\n");
-                else 
-                printf("Aluno atualizado!\n");
-                break;
-              }
-              case 4:{
-                printf("\e[H\e[2J");
-                opcaoAluno = 0;
-                opcaoAluno = exclusaoAluno(listaAluno);
-                
-                if(opcaoAluno == EXCLUSAO_SUCESSO)
-                  printf("Usuario excluido com sucesso!\n");
-                else
-                  printf("Nao foi possivel excluir este aluno!\n");
-                break;
-              }
-              
-            } 
+        case 1:
+        {
+          printf("\e[H\e[2J");
+          opcaoAluno = 0;
+          if (qtdAluno == TAM_PESSOA)
+          {
+            printf("Lista Cheia, impossivel cadastrar mais alunos!\n");
+          }
+          else
+          {
             
-          }while (!sairAluno);
-          break;
-        }
-        case 2:{
-          printf("\e[H\e[2J");
-          int opcaoProfessor;
-          int sairProfessor = false;
-          
-         
-          
-          do{
-            opcaoProfessor = menuProfessor();
-            switch (opcaoProfessor){
-              case 0:{
-                sairProfessor = true;
-                break;
-              }
-              case 1:{
-                printf("\e[H\e[2J");
-                int retorno = cadastrarProf(listaProfessor, qtdProfessor);
+            int retorno = cadastrarAlu(listaAluno, qtdAluno);
 
-                if (retorno == MATRICULA_INVALIDA)
-                    printf("Matricula invalida\n");
-                else if (retorno == SEXO_INVALIDO)
-                    printf("sexo invalido\n");
-                else if (retorno == DATA_INVALIDA)
-                    printf("data invalida\n");
-                else if (retorno == CPF_INVALIDO)
-                    printf("CPF invalido\n");
-                else
-                {
-                  printf ("Cadrasto realizado com sucesso\n");
-                  qtdProfessor++;
-                }
-              
-              break;             
-              }
-              case 2:{
-                printf("\e[H\e[2J");
-                listarProfessor(listaProfessor);
-                
-                break;
-              }
-              case 3:{
-                int retorno = atualizarProfessor(listaProfessor, qtdProfessor);
+            if (retorno == MATRICULA_INVALIDA)
+              printf("Matricula invalida\n");
+            else if (retorno == SEXO_INVALIDO)
+              printf("sexo invalido\n");
 
-                if (retorno == LISTA_VAZIA)
-                  printf ("Lista vazia\n");
-                else if (retorno == MATRICULA_INVALIDA)
-                  printf ("Matricula invalida\n");
-                else
-                  printf ("Atualizado com sucesso\n");
-
-                break;
-
-              }
-              case 4: {
-                int retorno = excluirProfessor(listaProfessor);
-
-                if (retorno == EXCLUSAO_SUCESSO)
-                  printf ("Professor excluido com sucesso\n");
-                else 
-                  printf ("falha na exclusao do professor");
-
-                break;
-              }
+            else if (retorno == DATA_INVALIDA)
+              printf("data invalida\n");
+            else if (retorno == CPF_INVALIDO)
+              printf("CPF invalido\n");
+            else
+            {
+              printf("Cadrasto realizado com sucesso\n");
+              qtdAluno++;
             }
-          } while (!sairProfessor);
+          }
           break;
         }
-        case 3:{
+        case 2:
+        {
           printf("\e[H\e[2J");
-          printf ("Você está no Menu disciplina\n");
+          listarAluno(listaAluno);
 
-          int opcaoDisc;
-          int sairDisc = false;
+          break;
+        }
+        case 3:
+        {
+          printf("\e[H\e[2J");
+          int retorno = atualizarAluno(listaAluno, qtdAluno);
+          if (retorno == MATRICULA_INVALIDA)
+            printf("Matricula inválida\n");
+          else if (retorno == LISTA_VAZIA)
+            printf("Lista Vazia.\n");
+          else
+            printf("Aluno atualizado!\n");
+          break;
+        }
+        case 4:
+        {
+          printf("\e[H\e[2J");
+          opcaoAluno = 0;
+          opcaoAluno = exclusaoAluno(listaAluno);
 
-          do{
-              opcaoDisc = menuDisciplina();
+          if (opcaoAluno == EXCLUSAO_SUCESSO)
+            printf("Usuario excluido com sucesso!\n");
+          else
+            printf("Nao foi possivel excluir este aluno!\n");
+          break;
+        }
+        }
 
-              switch (opcaoDisc)
-              {
-                case 0:{
-                  sairDisc = true;
-                  break;
-                }
+      } while (!sairAluno);
+      break;
+    }
+    case 2:
+    {
+      printf("\e[H\e[2J");
+      int opcaoProfessor;
+      int sairProfessor = false;
 
-                case 1:{
-                  printf("\e[H\e[2J");
-                  int retorno = cadastrarDisc(listaDisciplina, qtdDisciplina);
+      do
+      {
+        opcaoProfessor = menuProfessor();
+        switch (opcaoProfessor)
+        {
+        case 0:
+        {
+          sairProfessor = true;
+          break;
+        }
+        case 1:
+        {
+          printf("\e[H\e[2J");
+          int retorno = cadastrarProf(listaProfessor, qtdProfessor);
 
-                  if (retorno == TA_CHEIO_PAIZAO)
-                      printf ("Nao tem espaco para novas disciplinas.\n");
-                  else if (retorno == CODIGO_INVALIDO)
-                      printf ("Codigo invalido \n");
-                  else if (retorno == SEMESTRE_INVALIDO)
-                      printf ("Semestre invalido \n");
-                  else if (retorno == NOME_INVALIDO)
-                      printf ("Nome invalido \n");
-                  else if (retorno == PROFESSOR_INVALIDO)
-                      printf ("Professor invalido \n");
-                  else{
-                      printf ("Cadrasto realizado com sucesso! \n");
-                      qtdDisciplina++;
-                  }
-                  
+          if (retorno == MATRICULA_INVALIDA)
+            printf("Matricula invalida\n");
+          else if (retorno == SEXO_INVALIDO)
+            printf("sexo invalido\n");
+          else if (retorno == DATA_INVALIDA)
+            printf("data invalida\n");
+          else if (retorno == CPF_INVALIDO)
+            printf("CPF invalido\n");
+          else
+          {
+            printf("Cadrasto realizado com sucesso\n");
+            qtdProfessor++;
+          }
 
-                  break;
-                }
+          break;
+        }
+        case 2:
+        {
+          printf("\e[H\e[2J");
+          listarProfessor(listaProfessor);
 
-                case 2:{
-                  printf("\e[H\e[2J");
-                  printf ("Listar Disciplina\n");
-                  listarDisciplinas(listaDisciplina);
-                  break;
-                }
-                case 3:{
-                  printf("\e[H\e[2J");
-                  printf ("Atualizar Disciplina\n");
-                  int retorno = atualizarDisciplina(listaDisciplina, qtdDisciplina);
-                  if (retorno == LISTA_VAZIA)
-                  printf("Lista Vazia.\n");
-                  else if (retorno == CODIGO_INVALIDO)
-                  printf ("Codigo invalido. \n");
-                  else
-                  printf("Disciplina atualizada!\n");
-                  break;
-                }
-                case 4:{
-                  printf("\e[H\e[2J");
-                  printf ("Inserir aluno \n");
+          break;
+        }
+        case 3:
+        {
+          int retorno = atualizarProfessor(listaProfessor, qtdProfessor);
 
-                  int retorno = inserirAluno(listaDisciplina);
+          if (retorno == LISTA_VAZIA)
+            printf("Lista vazia\n");
+          else if (retorno == MATRICULA_INVALIDA)
+            printf("Matricula invalida\n");
+          else
+            printf("Atualizado com sucesso\n");
 
-                  if (retorno == TA_CHEIO_PAIZAO)
-                    printf ("Nao tem mais espaco na sala paizao\n");
-                  else if (retorno == CODIGO_INVALIDO)
-                    printf ("Codigo invalido\n");
-                  else if (retorno == MATRICULA_INVALIDA)
-                    printf ("Matricula invalida\n");
-                  else{
-                    printf ("Aluno inserido com sucesso \n");
-                  }
-                  break;
-                }
-                case 5:{
-                  int retorno = desinserirAluno(listaDisciplina);
-                  printf("\e[H\e[2J");
+          break;
+        }
+        case 4:
+        {
+          int retorno = excluirProfessor(listaProfessor);
 
-                  if (retorno == CODIGO_INVALIDO)
-                    printf ("Codigo invalido \n");
-                  else if (retorno == MATRICULA_INVALIDA)
-                    printf ("Matricula invalida");
-                  else
-                    printf ("Aluno excluido com sucesso");
-                   break;
-                }
-                case 6:{
-                  printf("\e[H\e[2J");
-                  printf ("Excluir Disciplina\n");
+          if (retorno == EXCLUSAO_SUCESSO)
+            printf("Professor excluido com sucesso\n");
+          else
+            printf("falha na exclusao do professor");
 
-                  int retorno = excluirDisciplina(listaDisciplina);
+          break;
+        }
+        }
+      } while (!sairProfessor);
+      break;
+    }
+    case 3:
+    {
+      printf("\e[H\e[2J");
+      printf("Você está no Menu disciplina\n");
 
-                  if (retorno == EXCLUSAO_SUCESSO)
-                      printf ("Exclusao realizada com sucesso! \n");
-                  else
-                      printf ("Nao foi possivel excluir a disciplina \n");
+      int opcaoDisc;
+      int sairDisc = false;
 
-                  break;
-                }
-                
+      do
+      {
+        opcaoDisc = menuDisciplina();
 
-                default:
-                  break;
-              }
+        switch (opcaoDisc)
+        {
+        case 0:
+        {
+          sairDisc = true;
+          break;
+        }
 
+        case 1:
+        {
+          printf("\e[H\e[2J");
+          int retorno = cadastrarDisc(listaDisciplina, qtdDisciplina);
 
-          }while (!sairDisc);
+          if (retorno == TA_CHEIO_PAIZAO)
+            printf("Nao tem espaco para novas disciplinas.\n");
+          else if (retorno == CODIGO_INVALIDO)
+            printf("Codigo invalido \n");
+          else if (retorno == SEMESTRE_INVALIDO)
+            printf("Semestre invalido \n");
+          else if (retorno == NOME_INVALIDO)
+            printf("Nome invalido \n");
+          else if (retorno == PROFESSOR_INVALIDO)
+            printf("Professor invalido \n");
+          else
+          {
+            printf("Cadrasto realizado com sucesso! \n");
+            qtdDisciplina++;
+          }
 
           break;
         }
 
-        case 4: {
-          int retorno = aniversariantes (listaAluno, listaProfessor);
+        case 2:
+        {
+          printf("\e[H\e[2J");
+          printf("Listar Disciplina\n");
+          listarDisciplinas(listaDisciplina);
+          break;
+        }
+        case 3:
+        {
+          printf("\e[H\e[2J");
+          printf("Atualizar Disciplina\n");
+          int retorno = atualizarDisciplina(listaDisciplina, qtdDisciplina);
+          if (retorno == LISTA_VAZIA)
+            printf("Lista Vazia.\n");
+          else if (retorno == CODIGO_INVALIDO)
+            printf("Codigo invalido. \n");
+          else
+            printf("Disciplina atualizada!\n");
+          break;
+        }
+        case 4:
+        {
+          printf("\e[H\e[2J");
+          printf("Inserir aluno \n");
 
-          if (retorno == DATA_INVALIDA)
-            printf ("Mes invalido\n");
+          int retorno = inserirAluno(listaDisciplina);
+
+          if (retorno == TA_CHEIO_PAIZAO)
+            printf("Nao tem mais espaco na sala paizao\n");
+          else if (retorno == CODIGO_INVALIDO)
+            printf("Codigo invalido\n");
+          else if (retorno == MATRICULA_INVALIDA)
+            printf("Matricula invalida\n");
+          else
+          {
+            printf("Aluno inserido com sucesso \n");
+          }
+          break;
+        }
+        case 5:
+        {
+          int retorno = desinserirAluno(listaDisciplina);
+          printf("\e[H\e[2J");
+
+          if (retorno == CODIGO_INVALIDO)
+            printf("Codigo invalido \n");
+          else if (retorno == MATRICULA_INVALIDA)
+            printf("Matricula invalida");
+          else
+            printf("Aluno excluido com sucesso");
+          break;
+        }
+        case 6:
+        {
+          printf("\e[H\e[2J");
+          printf("Excluir Disciplina\n");
+
+          int retorno = excluirDisciplina(listaDisciplina);
+
+          if (retorno == EXCLUSAO_SUCESSO)
+            printf("Exclusao realizada com sucesso! \n");
+          else
+            printf("Nao foi possivel excluir a disciplina \n");
 
           break;
-        }        
-
-        default:{
-          printf ("Opcao invalida\n");
         }
+
+        default:
+          break;
+        }
+
+      } while (!sairDisc);
+
+      break;
+    }
+
+    case 4:
+    {
+      int retorno = aniversariantes(listaAluno, listaProfessor);
+
+      if (retorno == DATA_INVALIDA)
+        printf("Mes invalido\n");
+
+      break;
+    }
+
+    default:
+    {
+      printf("Opcao invalida\n");
+    }
     }
   } while (!sair);
 }
