@@ -4,8 +4,7 @@
 #include <string.h>
 #include "models.h"
 
-int cadastrarAlu(pessoa listaAluno[], int qtdAluno)
-{
+int cadastrarAlu(pessoa listaAluno[], int qtdAluno){
   int validarCpf();
   printf("Cadrasto de aluno\n");
 
@@ -85,8 +84,7 @@ int cadastrarAlu(pessoa listaAluno[], int qtdAluno)
   return 0;
 }
 
-int listarAluno()
-{
+int listarAluno(){
   int opcaoListar;
   printf("Como deseja listar os alunos?\n");
   printf("1 - Listar por ordem de matricula\n");
@@ -94,6 +92,8 @@ int listarAluno()
   printf("3 - Listar por nome\n");
   printf("4 - Listar por data de nascimento\n");
   printf("5 - Listar alunos matriculados em menos de 3 materias\n");
+  printf("6 - Pesquisar nomes\n");
+  
   scanf("%d", &opcaoListar);
   getchar();
 
@@ -124,14 +124,18 @@ int listarAluno()
     listarAlunos3Disciplinas(listaAluno);
     break;
   }
+  case 6:
+  {
+    listarPessoas(listaAluno, listaProfessor);
+    break;
+  }
   default:
     printf("Opcao invalida");
     break;
   }
 }
 
-int listarAlunoPadrao(pessoa listaAluno[])
-{
+int listarAlunoPadrao(pessoa listaAluno[]){
   char opcaoLista;
   int sairLista = false;
   int achou = false;
@@ -192,8 +196,7 @@ int listarAlunoPadrao(pessoa listaAluno[])
   }
 }
 
-void listarAlunoSexo(pessoa listaAluno[])
-{
+void listarAlunoSexo(pessoa listaAluno[]){
   char opcaoLista;
   int sairLista = false;
   int achou = false;
@@ -263,8 +266,7 @@ void listarAlunoSexo(pessoa listaAluno[])
   }
 }
 
-void listarAlunosNome(pessoa listaAluno[], int qtdAluno)
-{
+void listarAlunosNome(pessoa listaAluno[], int qtdAluno){
 
   char opcaoLista;
   int sairLista = false;
@@ -360,8 +362,7 @@ void listarAlunosNome(pessoa listaAluno[], int qtdAluno)
   }
 }
 
-void listarAlunosData(pessoa listaAluno[])
-{
+void listarAlunosData(pessoa listaAluno[]){
   int dataMaisAntiga = 0, dataMaisNova = 0;
   int iCont;
   char opcaoLista;
@@ -447,8 +448,7 @@ void listarAlunosData(pessoa listaAluno[])
     printf("Nenhum Aluno cadastrado.\n");
 }
 
-void listarAlunos3Disciplinas(pessoa listaAluno[])
-{
+void listarAlunos3Disciplinas(pessoa listaAluno[]){
   char opcaoLista;
   int sairLista = false;
   int achou = false;
@@ -512,8 +512,7 @@ void listarAlunos3Disciplinas(pessoa listaAluno[])
   }
 }
 
-int atualizarAluno(pessoa listaAluno[], int qtdAluno)
-{
+int atualizarAluno(pessoa listaAluno[], int qtdAluno){
   int Matricula;
   int iCont;
   bool achou = false;
@@ -607,8 +606,7 @@ int atualizarAluno(pessoa listaAluno[], int qtdAluno)
   }
 }
 
-int exclusaoAluno(pessoa listaAluno[])
-{
+int exclusaoAluno(pessoa listaAluno[]){
   int Matricula;
   int iCont;
   printf("Menu Exclusão\n");
@@ -629,12 +627,7 @@ int exclusaoAluno(pessoa listaAluno[])
   }
 }
 
-listarPessoas(pessoa listaAluno[], pessoa listarProfessor[])
-{
-}
-
-int validarCpf(char cpf[])
-{
+int validarCpf(char cpf[]){
   int soma = 0, resto;
   int iCont;
   int primeiroDigito, segundoDigito;
@@ -685,4 +678,43 @@ int validarCpf(char cpf[])
     return CPF_INVALIDO;
 
   return 1;
+}
+
+void listarPessoas(pessoa listaAluno[], pessoa listarProfessor[]){
+	int iCont;
+	int sairPesquisa = false;
+	int igual = true;
+	char pesquisa[MAX];
+	
+	do{
+		fgets(pesquisa, MAX, stdin);
+		getchar();
+		
+		if(pesquisa[0] == '0')
+			sairPesquisa = true;
+			
+		printf("Lista de pessoas:\n");
+		
+		for(iCont = 0 ; iCont < TAM_PESSOA; iCont++){
+			igual = true;
+			if(listaAluno[iCont].ativo == true){
+				for(int jCont=0; pesquisa[jCont + 1] != '\n' && pesquisa[jCont + 1] != '\0'; jCont++){
+					if(listaAluno[iCont].nome[jCont] != pesquisa[jCont])
+						igual = false;
+				}
+				if(igual == true)
+					printf("- %s", listaAluno[iCont].nome);
+			}
+			if(listaProfessor[iCont].ativo == true){
+				for(int jCont=0; pesquisa[jCont + 1] != '\n' && pesquisa[jCont + 1] != '\0'; jCont++){
+					if(listaProfessor[iCont].nome[jCont] != pesquisa[jCont])
+						igual = false;
+			}
+				if(igual == true)
+					printf("- %s", listaAluno[iCont].nome);
+			}
+		}
+		for(int kCont=0; kCont<MAX; kCont++)
+			pesquisa[kCont] = '\0';
+	}while(!sairPesquisa);	
 }
