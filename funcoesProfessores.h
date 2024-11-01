@@ -4,8 +4,8 @@
 #include <string.h>
 #include "models.h"
 
-
 int cadastrarProf (pessoa listaProfessor[], int qtdProfessor){
+  int validarCpf();
   printf ("Cadrasto de professor\n");
 
   int Codigo;
@@ -51,19 +51,18 @@ int cadastrarProf (pessoa listaProfessor[], int qtdProfessor){
     return DATA_INVALIDA;
 
   char cpf[MAX_CPF];
-  printf ("digite o CPF\n");
-  fgets (cpf, MAX_CPF, stdin);
+  printf("digite o CPF\n");
+  fgets(cpf, MAX_CPF, stdin);
+  getchar();
 
-  int icont = 0;
-  while (cpf[icont] != '\n')
-    icont++;
-  
-  if (icont != 11){
-    //G: fazer o resto da validacao do cpf e ver se n tem cpf repetido
+  int retorno; 
+  retorno = validarCpf(cpf);
+  if (retorno == CPF_INVALIDO)
+  {
     return CPF_INVALIDO;
   }
   else{
-    for (icont = 0; icont < MAX_CPF; icont++)
+    for (int icont = 0; icont < MAX_CPF; icont++)
       listaProfessor[qtdProfessor].CPF[icont] = cpf[icont];
 
     for (int icont = 0; icont < MAX; icont++)
